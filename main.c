@@ -15,6 +15,7 @@ void print_stack(t_stacks *stacks)
 
 	a = stacks->a;
 	b = stacks->b;
+	printf("--------\n");
 	while (a || b)
 	{
 		if (a)
@@ -47,10 +48,12 @@ int parser(int count, char **argv, t_stacks *stacks)
 	}
 	return (0);
 }
+
 int main(int argc, char **argv)
 {
 	t_stacks stacks;
 
+	stacks.action = action_parser;
 	stacks.a = (t_node *) 0;
 	stacks.b = (t_node *) 0;
 
@@ -58,5 +61,8 @@ int main(int argc, char **argv)
 		return (1); // the stack passed as argv contain incorrect value
 	parser(argc, argv, &stacks);
 	print_stack(&stacks);
+	stacks.action(SA, &stacks);
+	print_stack(&stacks);
+
 	return (0);
 }
