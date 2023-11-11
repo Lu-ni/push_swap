@@ -13,3 +13,12 @@ t_node *lstnew(int content)
 	node->next = (t_node *) 0;
 	return (node);
 }
+
+t_node *lstlast(t_node *lst)
+{
+	if (!lst)
+		return ((t_node *) 0);
+	while (lst->next)
+		lst = lst->next;
+	return (lst);
+}
