@@ -1,5 +1,24 @@
 #include "struct.h"
 
+void action_p(t_stacks *stacks, char stack)
+{
+	t_node *node1;
+	t_node *node2;
+	if (stack == 'b' && stacks->a)
+	{
+		node1 = stacks->a;
+		stacks->a = node1->next;
+		node1->next = stacks->b;
+		stacks->b = node1;
+	}
+	if (stack == 'a' && stacks->b)
+	{
+		node1 = stacks->b;
+		stacks->b = node1->next;
+		node1->next = stacks->a;
+		stacks->a = node1;
+	}
+}
 void action_s(t_stacks *stacks, char stack)
 {
 	// this should manage a & b, not the case yet. It should also be protecting against edge case (only one element in stack)
@@ -32,4 +51,8 @@ void action_parser(int act, t_stacks *stacks)
 		action_s(stacks, 'b');
 	if (act == SS)
 		action_s(stacks, 's');
+	if (act == PA)
+		action_p(stacks, 'a');
+	if (act == PB)
+		action_p(stacks, 'b');
 }
