@@ -18,6 +18,7 @@ struct s_stacks; // declaring th struct for the compilator
 typedef struct s_node
 {
 	int            val;
+	int            index;
 	struct s_node *next;
 } t_node;
 
@@ -27,6 +28,7 @@ typedef struct s_stacks
 {
 	t_node  *a;
 	t_node  *b;
+	int      n;
 	t_action action;
 
 } t_stacks;

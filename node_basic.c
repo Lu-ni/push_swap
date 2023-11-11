@@ -10,6 +10,7 @@ t_node *lstnew(int content)
 	if (!node)
 		return ((t_node *) 0);
 	node->val = content;
+	node->index = -1;
 	node->next = (t_node *) 0;
 	return (node);
 }

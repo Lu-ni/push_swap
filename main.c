@@ -49,6 +49,35 @@ int parser(int count, char **argv, t_stacks *stacks)
 	return (0);
 }
 
+void add_index(t_stacks *stacks)
+{
+	int     min;
+	t_node *node;
+	int     i;
+
+	i = 0;
+	node = stacks->a;
+	min = 9999; // set to maxint
+	while (i < stacks->n)
+	{
+		node = stacks->a;
+		while (node)
+		{
+			if (node->val < min && node->index == -1)
+				min = node->val;
+			node = node->next;
+		}
+		node = stacks->a;
+		while (node)
+		{
+			if (node->val == min)
+				node->index = i++;
+			node = node->next;
+		}
+		min = 9999; // set to maxint
+	}
+}
+
 int main(int argc, char **argv)
 {
 	t_stacks stacks;
@@ -56,16 +85,13 @@ int main(int argc, char **argv)
 	stacks.action = action_parser;
 	stacks.a = (t_node *) 0;
 	stacks.b = (t_node *) 0;
+	stacks.n = argc - 1;
 
 	if (check_errors(argv, argc)) // todo
 		return (1); // the stack passed as argv contain incorrect value
 	parser(argc, argv, &stacks);
-	print_stack(&stacks);
-	stacks.action(PB, &stacks);
-	print_stack(&stacks);
-	stacks.action(PB, &stacks);
-	print_stack(&stacks);
-	stacks.action(RRR, &stacks);
+	add_index(&stacks);
+
 	print_stack(&stacks);
 
 	return (0);
