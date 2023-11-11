@@ -61,7 +61,11 @@ int main(int argc, char **argv)
 		return (1); // the stack passed as argv contain incorrect value
 	parser(argc, argv, &stacks);
 	print_stack(&stacks);
-	stacks.action(RA, &stacks);
+	stacks.action(PB, &stacks);
+	print_stack(&stacks);
+	stacks.action(PB, &stacks);
+	print_stack(&stacks);
+	stacks.action(RRR, &stacks);
 	print_stack(&stacks);
 
 	return (0);

@@ -22,6 +22,31 @@ void action_r(t_stacks *stacks, char stack)
 		node2->next = node1;
 	}
 }
+void action_rr(t_stacks *stacks, char stack)
+{
+	t_node *node1;
+	t_node *node2;
+	if ((stack == 'a' || stack == 'r') && stacks->a && stacks->a->next)
+	{
+		node1 = lstlast(stacks->a);
+		node1->next = stacks->a;
+		stacks->a = node1;
+		node2 = node1;
+		while (node2->next != node1)
+			node2 = node2->next;
+		node2->next = (t_node *) 0;
+	}
+	if ((stack == 'b' || stack == 'r') && stacks->b && stacks->b->next)
+	{
+		node1 = lstlast(stacks->b);
+		node1->next = stacks->b;
+		stacks->b = node1;
+		node2 = node1;
+		while (node2->next != node1)
+			node2 = node2->next;
+		node2->next = (t_node *) 0;
+	}
+}
 void action_p(t_stacks *stacks, char stack)
 {
 	t_node *node1;
@@ -82,4 +107,10 @@ void action_parser(int act, t_stacks *stacks)
 		action_r(stacks, 'b');
 	if (act == RR)
 		action_r(stacks, 'r');
+	if (act == RRA)
+		action_rr(stacks, 'a');
+	if (act == RRB)
+		action_rr(stacks, 'b');
+	if (act == RRR)
+		action_rr(stacks, 'r');
 }
