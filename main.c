@@ -78,6 +78,35 @@ void add_index(t_stacks *stacks)
 	}
 }
 
+int algo_pushb(t_stacks *stacks)
+{
+	int i;
+	int count;
+
+	count = 0;
+	i = 0;
+	while (stacks->a)
+	{
+		if (stacks->a->index == i)
+		{
+			stacks->action(PB, stacks);
+			count++;
+			i++;
+		}
+		else
+		{
+			stacks->action(RA, stacks);
+			count++;
+		}
+	}
+	while (stacks->b)
+	{
+		stacks->action(PA, stacks);
+		count++;
+	}
+	return (count);
+}
+
 int check_sorted(t_stacks *stacks)
 {
 	int     index;
@@ -131,7 +160,7 @@ int main(int argc, char **argv)
 	add_index(&stacks);
 	////// done with mandatory stuff
 	print_stack(&stacks);
-	algo1(&stacks);
+	printf("action (%i)\n", algo_pushb(&stacks));
 	print_stack(&stacks);
 
 	return (0);
