@@ -20,7 +20,7 @@ void print_stack(t_stacks *stacks)
 	{
 		if (a)
 		{
-			printf("a:%i\t", a->val);
+			printf("a (%i):%i\t", a->index, a->val);
 			a = a->next;
 		}
 		if (b)
@@ -78,6 +78,44 @@ void add_index(t_stacks *stacks)
 	}
 }
 
+int check_sorted(t_stacks *stacks)
+{
+	int     index;
+	t_node *node;
+
+	index = 0;
+	node = stacks->a;
+	while (node)
+	{
+		if (node->index == index)
+		{
+			node = node->next;
+			index++;
+		}
+		else
+		{
+			return (0);
+		}
+	}
+	return (1);
+}
+
+int algo1(t_stacks *stacks) // not working
+{
+	t_node *node;
+	int     trigger;
+
+	node = stacks->a;
+	while (!check_sorted(stacks))
+	{
+		if (node->next && node->index > node->next->index)
+			stacks->action(SA, stacks);
+		stacks->action(RRA, stacks);
+		node = stacks->a;
+	}
+	return (0);
+}
+
 int main(int argc, char **argv)
 {
 	t_stacks stacks;
@@ -91,7 +129,9 @@ int main(int argc, char **argv)
 		return (1); // the stack passed as argv contain incorrect value
 	parser(argc, argv, &stacks);
 	add_index(&stacks);
-
+	////// done with mandatory stuff
+	print_stack(&stacks);
+	algo1(&stacks);
 	print_stack(&stacks);
 
 	return (0);
