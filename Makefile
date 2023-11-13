@@ -5,7 +5,9 @@ SRC = ft_printf.c hexadecimal_tools.c ft_u_itoa.c
 OBJ = $(SRC:.c=.o)
 LIBFT = libft/libft.a
 
-all: $(NAME)
+all: x
+tester: x
+	cd push_swap_tester && bash myTestes.sh && cd ../
 x:
 	gcc *.c -L. -lft -o push_swap
 $(NAME): $(OBJ) $(LIBFT)

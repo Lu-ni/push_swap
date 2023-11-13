@@ -1,6 +1,7 @@
 #include "libft/libft.h"
 #include "node_utils.h"
 #include "struct.h"
+#include <limits.h>
 #include <stdio.h>
 
 int check_errors(char **argv, int count)
@@ -57,7 +58,7 @@ void add_index(t_stacks *stacks)
 
 	i = 0;
 	node = stacks->a;
-	min = 9999; // set to maxint
+	min = INT_MAX;
 	while (i < stacks->n)
 	{
 		node = stacks->a;
@@ -74,7 +75,7 @@ void add_index(t_stacks *stacks)
 				node->index = i++;
 			node = node->next;
 		}
-		min = 9999; // set to maxint
+		min = INT_MAX;
 	}
 }
 
@@ -159,9 +160,8 @@ int main(int argc, char **argv)
 	parser(argc, argv, &stacks);
 	add_index(&stacks);
 	////// done with mandatory stuff
-	print_stack(&stacks);
-	printf("action (%i)\n", algo_pushb(&stacks));
-	print_stack(&stacks);
+	algo_pushb(&stacks);
+	// print_stack(&stacks);
 
 	return (0);
 }
