@@ -160,7 +160,15 @@ void 	add_delta(t_stacks *stacks)
 		i++;
 	}
 }
-
+void alog_delta_sort(t_stacks *stacks)
+{
+	while (!check_sorted(stacks))
+	{
+		if (stacks->a->delta < stacks->a->next->delta)
+			stacks->action(SA, stacks);
+		stacks->action(RA, stacks);
+	}
+}
 int main(int argc, char **argv)
 {
 	t_stacks stacks;
@@ -176,9 +184,8 @@ int main(int argc, char **argv)
 	add_index(&stacks);
 	add_delta(&stacks);
 	////// done with mandatory stuff
-	print_stack(&stacks);
 	algo_pushb(&stacks);
-	print_stack(&stacks);
+	//alog_delta_sort(&stacks);
 
 	return (0);
 }

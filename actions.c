@@ -13,7 +13,7 @@ void action_r(t_stacks *stacks, char stack)
 		node1->next = (t_node *) 0;
 		node2 = lstlast(stacks->a);
 		node2->next = node1;
-		printf("sa");
+		printf("ra");
 	}
 	if ((stack == 'b' || stack == 'r') && stacks->b && stacks->b->next)
 	{
@@ -22,7 +22,7 @@ void action_r(t_stacks *stacks, char stack)
 		node1->next = (t_node *) 0;
 		node2 = lstlast(stacks->b);
 		node2->next = node1;
-		printf("sb");
+		printf("rb");
 	}
 }
 void action_rr(t_stacks *stacks, char stack)
@@ -74,7 +74,6 @@ void action_p(t_stacks *stacks, char stack)
 }
 void action_s(t_stacks *stacks, char stack)
 {
-	// this should manage a & b, not the case yet. It should also be protecting against edge case (only one element in stack)
 	t_node *node1;
 	t_node *node2;
 
@@ -85,6 +84,7 @@ void action_s(t_stacks *stacks, char stack)
 		node1->next = node2->next;
 		node2->next = node1;
 		stacks->a = node2;
+		printf("sa");
 	}
 	if (stack == 'b' || stack == 's')
 	{
@@ -93,6 +93,7 @@ void action_s(t_stacks *stacks, char stack)
 		node1->next = node2->next;
 		node2->next = node1;
 		stacks->b = node2;
+		printf("sa");
 	}
 }
 
