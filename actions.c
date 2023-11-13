@@ -121,4 +121,5 @@ void action_parser(int act, t_stacks *stacks)
 	if (act == RRR)
 		action_rr(stacks, 'r');
 	printf("\n");
+	add_delta(stacks);
 }

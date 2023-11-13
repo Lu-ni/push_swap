@@ -178,7 +178,7 @@ int main(int argc, char **argv)
 	////// done with mandatory stuff
 	print_stack(&stacks);
 	algo_pushb(&stacks);
-	// print_stack(&stacks);
+	print_stack(&stacks);
 
 	return (0);
 }
