@@ -21,7 +21,7 @@ void print_stack(t_stacks *stacks)
 	{
 		if (a)
 		{
-			printf("a (%i):%i\t", a->index, a->val);
+			printf("a (i:%i\td:%i):%i\t", a->index,a->delta, a->val);
 			a = a->next;
 		}
 		if (b)
@@ -146,6 +146,21 @@ int algo1(t_stacks *stacks) // not working
 	return (0);
 }
 
+void 	add_delta(t_stacks *stacks)
+{
+	int i;
+	t_node *node;
+
+	i=0;
+	node =stacks->a;
+	while(node)
+	{
+		node->delta = i - node->index;
+		node = node->next;
+		i++;
+	}
+}
+
 int main(int argc, char **argv)
 {
 	t_stacks stacks;
@@ -159,7 +174,9 @@ int main(int argc, char **argv)
 		return (1); // the stack passed as argv contain incorrect value
 	parser(argc, argv, &stacks);
 	add_index(&stacks);
+	add_delta(&stacks);
 	////// done with mandatory stuff
+	print_stack(&stacks);
 	algo_pushb(&stacks);
 	// print_stack(&stacks);
 

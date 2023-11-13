@@ -19,6 +19,7 @@ typedef struct s_node
 {
 	int            val;
 	int            index;
+	int            delta;
 	struct s_node *next;
 } t_node;
 
