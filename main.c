@@ -96,9 +96,10 @@ int algo_pushb(t_stacks *stacks)
 		}
 		else
 		{
-			stacks->action(RA, stacks);
+			stacks->action(RA, stacks); // add direction checker (RRA or RA ?)
 			count++;
 		}
+		// add a partial check: if what's letf in the stack is sorterd, we start to put back in a -> should devid per 2 in average... maybe ?
 	}
 	while (stacks->b)
 	{
@@ -186,8 +187,8 @@ int main(int argc, char **argv)
 	add_index(&stacks);
 	add_delta(&stacks);
 	////// done with mandatory stuff
-	// algo_pushb(&stacks);
-	alog_delta_sort(&stacks);
+	algo_pushb(&stacks);
+	// alog_delta_sort(&stacks);
 
 	return (0);
 }
