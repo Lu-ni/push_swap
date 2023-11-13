@@ -21,7 +21,7 @@ void print_stack(t_stacks *stacks)
 	{
 		if (a)
 		{
-			printf("a (i:%i\td:%i):%i\t", a->index,a->delta, a->val);
+			printf("a (i:%i\td:%i):%i\t", a->index, a->delta, a->val);
 			a = a->next;
 		}
 		if (b)
@@ -146,27 +146,29 @@ int algo1(t_stacks *stacks) // not working
 	return (0);
 }
 
-void 	add_delta(t_stacks *stacks)
+void add_delta(t_stacks *stacks)
 {
-	int i;
+	int     i;
 	t_node *node;
 
-	i=0;
-	node =stacks->a;
-	while(node)
+	i = 0;
+	node = stacks->a;
+	while (node)
 	{
 		node->delta = i - node->index;
 		node = node->next;
 		i++;
 	}
 }
-void alog_delta_sort(t_stacks *stacks)
+void alog_delta_sort(t_stacks *stacks) // working but shitty ~N^3
 {
 	while (!check_sorted(stacks))
 	{
-		if (stacks->a->delta < stacks->a->next->delta)
+		if ((stacks->a->next->delta < stacks->a->delta))
 			stacks->action(SA, stacks);
-		stacks->action(RA, stacks);
+		if (check_sorted(stacks))
+			return;
+		stacks->action(RRA, stacks);
 	}
 }
 int main(int argc, char **argv)
@@ -184,8 +186,8 @@ int main(int argc, char **argv)
 	add_index(&stacks);
 	add_delta(&stacks);
 	////// done with mandatory stuff
-	algo_pushb(&stacks);
-	//alog_delta_sort(&stacks);
+	// algo_pushb(&stacks);
+	alog_delta_sort(&stacks);
 
 	return (0);
 }
