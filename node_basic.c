@@ -6,7 +6,7 @@ t_node *lstnew(int content)
 {
 	t_node *node;
 
-	node = (t_node *) malloc(sizeof(struct s_list));
+	node = (t_node *) malloc(sizeof(t_node));
 	if (!node)
 		return ((t_node *) 0);
 	node->val = content;
