@@ -9,30 +9,6 @@ int check_errors(char **argv, int count)
 	return (0);
 }
 
-void print_stack(t_stacks *stacks)
-{
-	t_node *a;
-	t_node *b;
-
-	a = stacks->a;
-	b = stacks->b;
-	printf("--------\n");
-	while (a || b)
-	{
-		if (a)
-		{
-			printf("a (i:%i\td:%i):%i\t", a->index, a->delta, a->val);
-			a = a->next;
-		}
-		if (b)
-		{
-			printf("b:%i", b->val);
-			b = b->next;
-		}
-		printf("\n");
-	}
-}
-
 int parser(int count, char **argv, t_stacks *stacks)
 {
 	t_node *node;
@@ -48,35 +24,6 @@ int parser(int count, char **argv, t_stacks *stacks)
 		i++;
 	}
 	return (0);
-}
-
-void add_index(t_stacks *stacks)
-{
-	int     min;
-	t_node *node;
-	int     i;
-
-	i = 0;
-	node = stacks->a;
-	min = INT_MAX;
-	while (i < stacks->n)
-	{
-		node = stacks->a;
-		while (node)
-		{
-			if (node->val < min && node->index == -1)
-				min = node->val;
-			node = node->next;
-		}
-		node = stacks->a;
-		while (node)
-		{
-			if (node->val == min)
-				node->index = i++;
-			node = node->next;
-		}
-		min = INT_MAX;
-	}
 }
 
 int algo_pushb(t_stacks *stacks)
@@ -109,28 +56,6 @@ int algo_pushb(t_stacks *stacks)
 	return (count);
 }
 
-int check_sorted(t_stacks *stacks)
-{
-	int     index;
-	t_node *node;
-
-	index = 0;
-	node = stacks->a;
-	while (node)
-	{
-		if (node->index == index)
-		{
-			node = node->next;
-			index++;
-		}
-		else
-		{
-			return (0);
-		}
-	}
-	return (1);
-}
-
 int algo1(t_stacks *stacks) // not working
 {
 	t_node *node;
@@ -147,20 +72,6 @@ int algo1(t_stacks *stacks) // not working
 	return (0);
 }
 
-void add_delta(t_stacks *stacks)
-{
-	int     i;
-	t_node *node;
-
-	i = 0;
-	node = stacks->a;
-	while (node)
-	{
-		node->delta = i - node->index;
-		node = node->next;
-		i++;
-	}
-}
 void alog_delta_sort(t_stacks *stacks) // working but shitty ~N^3
 {
 	while (!check_sorted(stacks))
@@ -172,49 +83,36 @@ void alog_delta_sort(t_stacks *stacks) // working but shitty ~N^3
 		stacks->action(RRA, stacks);
 	}
 }
-void add_i(t_stacks *stacks)
-{
-	int     i;
-	t_node *node;
-
-	i = 0;
-	node = stacks->a;
-	while (node)
-	{
-		node->i = i++;
-		node = node->next;
-	}
-}
-void add_i_relative(t_stacks *stacks)
-{
-	int     i;
-	t_node *node;
-
-	i = 0;
-	node = stacks->a;
-	while (node)
-	{
-		if (node->i_relative == 0)
-			break;
-		node = node->next;
-	}
-	while (node && i < stacks->n)
-	{
-		node->i_relative = i++;
-		if (node->next)
-			node = node->next;
-		else
-			node = stacks->a;
-	}
-}
 
 void algo_insert_sort(t_stacks *stacks)
 {
 	t_node *node;
+	t_node *last_node;
 	// check if value is bigger than previous
 	//	if value is bigger -> push to b and then sort it
 	//	else -> do nothing
 	node = stacks->a;
+	while (stacks->a->i_relative != 0)
+		stacks->action(RA, stacks);
+	while (!check_sorted(stacks))
+	{
+		if (stacks->a->next->index == 0 || stacks->a->index < stacks->a->next->index)
+			stacks->action(RA, stacks);
+		else
+		{
+			stacks->action(RA, stacks);
+			stacks->action(PB, stacks);
+			while (stacks->a->index != 0)
+			{
+				stacks->action(RRA, stacks);
+			}
+			while (stacks->a->index < stacks->b->index)
+			{
+				stacks->action(RA, stacks);
+			}
+			stacks->action(PA, stacks);
+		}
+	}
 }
 
 int main(int argc, char **argv)
@@ -232,11 +130,12 @@ int main(int argc, char **argv)
 	add_index(&stacks);
 	add_delta(&stacks);
 	add_i(&stacks);
-	stacks.a->i_relative = 0;
+	set_zero_relative(&stacks);
 	add_i_relative(&stacks);
 	////// done with mandatory stuff
+	algo_insert_sort(&stacks);
 	// algo_pushb(&stacks);
-	alog_delta_sort(&stacks);
+	// alog_delta_sort(&stacks);
 
 	return (0);
 }
