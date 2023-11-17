@@ -26,6 +26,27 @@ int parser(int count, char **argv, t_stacks *stacks)
 	return (0);
 }
 
+int checkdirection(t_stacks *stacks, int index)
+{
+	int     count;
+	int     size;
+	t_node *node;
+
+	count = 0;
+	size = 0;
+	node = stacks->a;
+	while (node)
+	{
+		if (node->index == index)
+			count = size;
+		node = node->next;
+		size++;
+	}
+	if (count < (size / 2))
+		return 1;
+	else
+		return 0;
+}
 int algo_pushb(t_stacks *stacks)
 {
 	int i;
@@ -43,7 +64,10 @@ int algo_pushb(t_stacks *stacks)
 		}
 		else
 		{
-			stacks->action(RA, stacks); // add direction checker (RRA or RA ?)
+			if (checkdirection(stacks, i))
+				stacks->action(RA, stacks);
+			else
+				stacks->action(RRA, stacks);
 			count++;
 		}
 		// add a partial check: if what's letf in the stack is sorterd, we start to put back in a -> should devid per 2 in average... maybe ?
