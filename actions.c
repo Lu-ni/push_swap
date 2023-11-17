@@ -123,4 +123,6 @@ void action_parser(int act, t_stacks *stacks)
 		action_rr(stacks, 'r');
 	printf("\n");
 	add_delta(stacks);
+	add_i(stacks);
+	add_i_relative(stacks);
 }

@@ -6,4 +6,6 @@ t_node *lstlast(t_node *lst);
 // stack tools
 void action_s(t_stacks *stacks, char stack);
 void action_parser(int act, t_stacks *stacks);
-void 	add_delta(t_stacks *stacks);
+void add_delta(t_stacks *stacks);
+void add_i(t_stacks *stacks);
+void add_i_relative(t_stacks *stacks);

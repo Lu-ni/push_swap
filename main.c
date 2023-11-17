@@ -172,6 +172,51 @@ void alog_delta_sort(t_stacks *stacks) // working but shitty ~N^3
 		stacks->action(RRA, stacks);
 	}
 }
+void add_i(t_stacks *stacks)
+{
+	int     i;
+	t_node *node;
+
+	i = 0;
+	node = stacks->a;
+	while (node)
+	{
+		node->i = i++;
+		node = node->next;
+	}
+}
+void add_i_relative(t_stacks *stacks)
+{
+	int     i;
+	t_node *node;
+
+	i = 0;
+	node = stacks->a;
+	while (node)
+	{
+		if (node->i_relative == 0)
+			break;
+		node = node->next;
+	}
+	while (node && i < stacks->n)
+	{
+		node->i_relative = i++;
+		if (node->next)
+			node = node->next;
+		else
+			node = stacks->a;
+	}
+}
+
+void algo_insert_sort(t_stacks *stacks)
+{
+	t_node *node;
+	// check if value is bigger than previous
+	//	if value is bigger -> push to b and then sort it
+	//	else -> do nothing
+	node = stacks->a;
+}
+
 int main(int argc, char **argv)
 {
 	t_stacks stacks;
@@ -186,9 +231,12 @@ int main(int argc, char **argv)
 	parser(argc, argv, &stacks);
 	add_index(&stacks);
 	add_delta(&stacks);
+	add_i(&stacks);
+	stacks.a->i_relative = 0;
+	add_i_relative(&stacks);
 	////// done with mandatory stuff
-	algo_pushb(&stacks);
-	// alog_delta_sort(&stacks);
+	// algo_pushb(&stacks);
+	alog_delta_sort(&stacks);
 
 	return (0);
 }

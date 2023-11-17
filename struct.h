@@ -20,6 +20,8 @@ typedef struct s_node
 	int            val;
 	int            index;
 	int            delta;
+	int            i;
+	int            i_relative;
 	struct s_node *next;
 } t_node;
 
