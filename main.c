@@ -84,10 +84,20 @@ void alog_delta_sort(t_stacks *stacks) // working but shitty ~N^3
 	}
 }
 
+int get_lastnode_index(t_stacks *stacks)
+{
+	t_node *node;
+	node = stacks->a;
+	while (node && node->next)
+		node = node->next;
+	return node->index;
+}
+
 void algo_insert_sort(t_stacks *stacks)
 {
 	t_node *node;
 	t_node *last_node;
+
 	// check if value is bigger than previous
 	//	if value is bigger -> push to b and then sort it
 	//	else -> do nothing
@@ -102,13 +112,9 @@ void algo_insert_sort(t_stacks *stacks)
 		{
 			stacks->action(RA, stacks);
 			stacks->action(PB, stacks);
-			while (stacks->a->index != 0)
+			while (get_lastnode_index(stacks) > stacks->b->index)
 			{
 				stacks->action(RRA, stacks);
-			}
-			while (stacks->a->index < stacks->b->index)
-			{
-				stacks->action(RA, stacks);
 			}
 			stacks->action(PA, stacks);
 		}
@@ -133,8 +139,8 @@ int main(int argc, char **argv)
 	set_zero_relative(&stacks);
 	add_i_relative(&stacks);
 	////// done with mandatory stuff
-	algo_insert_sort(&stacks);
-	// algo_pushb(&stacks);
+	// algo_insert_sort(&stacks);
+	algo_pushb(&stacks);
 	// alog_delta_sort(&stacks);
 
 	return (0);
