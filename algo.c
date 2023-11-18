@@ -118,38 +118,37 @@ int count_pos_b(t_node *node_,t_stacks *stacks)
 
 int leastcost(t_stacks *stacks)
 {
-	int size_b;
 	int cost_ra;
+	int i;
 	int cost_rb;
 	int min_cost;
 	int index_min;
 	t_node *node;
+	int size_a;
 
+	size_a = size_stack(stacks, 'a');
+	i = 0;
 	cost_ra = 0;
-	size_b = 0;
 	min_cost = 100000000;
 	index_min = -1;
 	node = stacks->b;
-	while (node)
-	{
-		node = node->next;
-		size_b++;
-	}
 	node = stacks->a;
 	while (node)
 	{
-		if (count_pos_b(node, stacks) > (size_b / 2))
-			cost_rb = count_pos_b(node, stacks) - (size_b / 2);
+		if (i > size_a / 2)
+			cost_ra = size_a - (i - size_a / 2)
 		else
-			cost_rb = count_pos_b(node, stacks);
-
+			cost_ra = i;
+		cost_rb =  count_pos_b(node, stacks);
+		if (cost_rb < 0)
+			cost_rb *= -1;
 		if((cost_ra + cost_rb) < min_cost)
 		{
 			min_cost = cost_ra + cost_rb;
 			index_min = node->index;
 		}
 		node = node->next;
-		cost_ra ++;
+		i++;
 	}
 	return(index_min);	
 }
