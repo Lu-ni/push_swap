@@ -9,7 +9,7 @@ all: x
 tester: x
 	cd push_swap_tester && bash myTestes.sh && cd ../
 x:
-	gcc *.c -L. -lft -o push_swap
+	gcc -g *.c -L. -lft -o push_swap
 $(NAME): $(OBJ) $(LIBFT)
 	# Extract object files from libft.a
 	ar -x $(LIBFT)

@@ -164,7 +164,7 @@ int main(int argc, char **argv)
 	add_i_relative(&stacks);
 	////// done with mandatory stuff
 	// algo_insert_sort(&stacks);
-	algo_pushb(&stacks);
+	algo_pushb2(&stacks);
 	// alog_delta_sort(&stacks);
 
 	return (0);
