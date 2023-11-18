@@ -14,3 +14,4 @@ int  check_sorted(t_stacks *stacks);
 void add_index(t_stacks *stacks);
 void print_stack(t_stacks *stacks);
 void algo_pushb2(t_stacks *stacks);
+void add_action2stack(t_stacks *stacks, int action);

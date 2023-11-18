@@ -32,6 +32,7 @@ typedef struct s_stacks
 	t_node  *a;
 	t_node  *b;
 	int      n;
+	int      action_stack[2000];
 	t_action action;
 
 } t_stacks;

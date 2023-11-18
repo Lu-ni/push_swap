@@ -2,6 +2,16 @@
 #include "struct.h"
 #include <stdio.h>
 
+void add_action2stack(t_stacks *stacks, int action)
+{
+	int i_tab;
+	i_tab = 0;
+	while (stacks->action_stack[i_tab] != -1)
+		i_tab++;
+	stacks->action_stack[i_tab++] = action;
+	stacks->action_stack[i_tab] = -1;
+}
+
 void action_r(t_stacks *stacks, char stack)
 {
 	t_node *node1;
@@ -13,7 +23,8 @@ void action_r(t_stacks *stacks, char stack)
 		node1->next = (t_node *) 0;
 		node2 = lstlast(stacks->a);
 		node2->next = node1;
-		printf("ra");
+		add_action2stack(stacks, RA);
+		//printf("ra");
 	}
 	if ((stack == 'b' || stack == 'r') && stacks->b && stacks->b->next)
 	{
@@ -22,7 +33,8 @@ void action_r(t_stacks *stacks, char stack)
 		node1->next = (t_node *) 0;
 		node2 = lstlast(stacks->b);
 		node2->next = node1;
-		printf("rb");
+		add_action2stack(stacks, RB);
+		//printf("rb");
 	}
 }
 void action_rr(t_stacks *stacks, char stack)
@@ -38,7 +50,8 @@ void action_rr(t_stacks *stacks, char stack)
 		while (node2->next != node1)
 			node2 = node2->next;
 		node2->next = (t_node *) 0;
-		printf("rra");
+		add_action2stack(stacks, RRA);
+		//printf("rra");
 	}
 	if ((stack == 'b' || stack == 'r') && stacks->b && stacks->b->next)
 	{
@@ -49,7 +62,8 @@ void action_rr(t_stacks *stacks, char stack)
 		while (node2->next != node1)
 			node2 = node2->next;
 		node2->next = (t_node *) 0;
-		printf("rrb");
+		add_action2stack(stacks, RRB);
+		//printf("rrb");
 	}
 }
 void action_p(t_stacks *stacks, char stack)
@@ -61,7 +75,7 @@ void action_p(t_stacks *stacks, char stack)
 		stacks->a = node1->next;
 		node1->next = stacks->b;
 		stacks->b = node1;
-		printf("pb");
+		printf("pb\n");
 	}
 	if (stack == 'a' && stacks->b)
 	{
@@ -69,7 +83,7 @@ void action_p(t_stacks *stacks, char stack)
 		stacks->b = node1->next;
 		node1->next = stacks->a;
 		stacks->a = node1;
-		printf("pa");
+		printf("pa\n");
 	}
 }
 void action_s(t_stacks *stacks, char stack)
@@ -84,7 +98,7 @@ void action_s(t_stacks *stacks, char stack)
 		node1->next = node2->next;
 		node2->next = node1;
 		stacks->a = node2;
-		printf("sa");
+		printf("sa\n");
 	}
 	if (stack == 'b' || stack == 's')
 	{
@@ -93,7 +107,7 @@ void action_s(t_stacks *stacks, char stack)
 		node1->next = node2->next;
 		node2->next = node1;
 		stacks->b = node2;
-		printf("sa");
+		printf("sa\n");
 	}
 }
 
@@ -121,7 +135,6 @@ void action_parser(int act, t_stacks *stacks)
 		action_rr(stacks, 'b');
 	if (act == RRR)
 		action_rr(stacks, 'r');
-	printf("\n");
 	add_delta(stacks);
 	add_i(stacks);
 	add_i_relative(stacks);

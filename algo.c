@@ -6,7 +6,7 @@
 /*   By: lnicolli <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 20:26:16 by lnicolli          #+#    #+#             */
-/*   Updated: 2023/11/18 20:39:19 by lnicolli         ###   ########.fr       */
+/*   Updated: 2023/11/18 21:39:38 by lnicolli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,7 +156,6 @@ int leastcost(t_stacks *stacks)
 			cost_rb =  count_pos_b(node, stacks);
 			if (cost_rb < 0)
 				cost_rb *= -1;
-			printf("cost a:%i\tcost_b:%i\tsum:%i\n", cost_ra,cost_rb, cost_ra + cost_rb);
 			if((cost_ra + cost_rb) < min_cost)
 			{
 				min_cost = cost_ra + cost_rb;
@@ -207,11 +206,75 @@ int checkdirection_b(t_stacks *stacks, int count)
 	else
 		return 0;
 }
+void opti_action_stack(t_stacks *stacks)
+{
+	int i; 
+	int count_RA;
+	int count_RB;
+	int count_RRA;
+	int count_RRB;
+	int count = 0;
+	i = 0;
+	count_RA = 0;
+	count_RB = 0;
+	count_RRA = 0;
+	count_RRB = 0;
+	while(stacks->action_stack[i] != -1)
+	{
+		if (stacks->action_stack[i] == RA)
+			count_RA++;
+		else if (stacks->action_stack[i] == RB)
+			count_RB++;
+		else if (stacks->action_stack[i] == RRA)
+			count_RRA++;
+		else if (stacks->action_stack[i] == RRB)
+			count_RRB++;
+		i++;
+	}
+	if (count_RA > count_RB)
+	{
+		count =  count_RB;
+		while (count-- > 0)
+			printf("rr\n");
+		count = count_RA - count_RB;
+		while (count-- > 0)
+			printf("ra\n");
+	}
+	else
+	{
+		count =  count_RA;
+		while (count-- > 0)
+			printf("rr\n");
+		count = count_RB - count_RA;
+		while (count-- > 0)
+			printf("rb\n");
+	}
+
+	if (count_RRA > count_RRB)
+	{
+		count =  count_RRB;
+		while (count-- > 0)
+			printf("rrr\n");
+		count = count_RRA - count_RRB;
+		while (count-- > 0)
+			printf("rra\n");
+	}
+	else
+	{
+		count =  count_RRA;
+		while (count-- > 0)
+			printf("rrr\n");
+		count = count_RRB - count_RRA;
+		while (count-- > 0)
+			printf("rrb\n");
+	}
+}
 void algo_pushb2(t_stacks *stacks)
 {
 	stacks->action(PB, stacks);
 	stacks->action(PB, stacks);
 	int min_index;
+	stacks->action_stack[0] = -1;
 	
 	while(stacks->a)
 	{
@@ -231,6 +294,8 @@ void algo_pushb2(t_stacks *stacks)
 			else
 				stacks->action(RRB, stacks);
 		}
+		opti_action_stack(stacks);
+		stacks->action_stack[0] = -1;
 		stacks->action(PB, stacks);
 	}
 	while(stacks->b->index != max_b(stacks))
