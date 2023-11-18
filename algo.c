@@ -118,7 +118,7 @@ int leastcost(t_stacks *stacks)
 	while (node)
 	{
 		if (count_pos_b(node, stacks) > (size_b / 2))
-			cost_rb = count_pos_b(node, stacks) - size_b / 2;
+			cost_rb = count_pos_b(node, stacks) - (size_b / 2);
 		else
 			cost_rb = count_pos_b(node, stacks);
 
@@ -128,6 +128,7 @@ int leastcost(t_stacks *stacks)
 			index_min = node->index;
 		}
 		node = node->next;
+		cost_ra ++;
 	}
 	return(index_min);	
 }
