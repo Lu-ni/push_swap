@@ -136,7 +136,7 @@ int leastcost(t_stacks *stacks)
 	while (node)
 	{
 		if (i > size_a / 2)
-			cost_ra = size_a - (i - size_a / 2)
+			cost_ra = size_a - (i - size_a / 2);
 		else
 			cost_ra = i;
 		cost_rb =  count_pos_b(node, stacks);
