@@ -65,7 +65,7 @@ int previous_index(t_stacks *stacks, int index)
 	return -1;
 }
 
-int count_pos_b(t_stacks *stacks)
+int count_pos_b(t_node *node_,t_stacks *stacks)
 {
 	int max;
 	int min;
@@ -76,9 +76,9 @@ int count_pos_b(t_stacks *stacks)
 	min = min_b(stacks);
 	count = 0;
 	node = stacks->b;
-	if (min < stacks->a->index && stacks->a->index < max)
+	if (min < node_->index && node_->index < max)
 	{
-		while(!(previous_index(stacks, node->index) > stacks->a->index && stacks->a->index > node->index))
+		while(!(previous_index(stacks, node->index) > node_->index && node_->index > node->index))
 				{
 					count++;
 					node = node->next;
@@ -95,6 +95,64 @@ int count_pos_b(t_stacks *stacks)
 	return count;
 }
 
+int leastcost(t_stacks *stacks)
+{
+	int size_b;
+	int cost_ra;
+	int cost_rb;
+	int min_cost;
+	int index_min;
+	t_node *node;
+
+	cost_ra = 0;
+	size_b = 0;
+	min_cost = 100000000;
+	index_min = -1;
+	node = stacks->b;
+	while (node)
+	{
+		node = node->next;
+		size_b++;
+	}
+	node = stacks->a;
+	while (node)
+	{
+		if (count_pos_b(node, stacks) > (size_b / 2))
+			cost_rb = count_pos_b(node, stacks) / 2;
+		else
+			cost_rb = count_pos_b(node, stacks);
+
+		if((cost_ra + cost_rb) < min_cost)
+		{
+			min_cost = cost_ra + cost_rb;
+			index_min = node->index;
+		}
+		node = node->next;
+	}
+	return(index_min);	
+}
+
+int checkdirection_a(t_stacks *stacks, int index)
+{
+	int     count;
+	int     size;
+	t_node *node;
+
+	count = 0;
+	size = 0;
+	node = stacks->a;
+	while (node)
+	{
+		if (node->index == index)
+			count = size;
+		node = node->next;
+		size++;
+	}
+	if (count < (size / 2))
+		return 1;
+	else
+		return 0;
+}
 int checkdirection_b(t_stacks *stacks, int count)
 {
 	int     size;
@@ -116,12 +174,22 @@ void algo_pushb2(t_stacks *stacks)
 {
 	stacks->action(PB, stacks);
 	stacks->action(PB, stacks);
+	int min_index;
 	
 	while(stacks->a)
 	{
-		while(count_pos_b(stacks))
+		min_index = leastcost(stacks);
+
+		while(stacks->a->index != min_index)
 		{
-			if(checkdirection_b(stacks, count_pos_b(stacks)))
+			if(checkdirection_a(stacks, min_index))
+				stacks->action(RA, stacks);
+			else
+				stacks->action(RRA, stacks);
+		}
+		while(count_pos_b(stacks->a,stacks))
+		{
+			if(checkdirection_b(stacks, count_pos_b(stacks->a,stacks)))
 				stacks->action(RB, stacks);
 			else
 				stacks->action(RRB, stacks);
