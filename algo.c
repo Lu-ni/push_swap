@@ -95,6 +95,23 @@ int count_pos_b(t_stacks *stacks)
 	return count;
 }
 
+int checkdirection_b(t_stacks *stacks, int count)
+{
+	int     size;
+	t_node *node;
+
+	size = 0;
+	node = stacks->b;
+	while (node)
+	{
+		node = node->next;
+		size++;
+	}
+	if (count < (size / 2))
+		return 1;
+	else
+		return 0;
+}
 void algo_pushb2(t_stacks *stacks)
 {
 	stacks->action(PB, stacks);
@@ -103,7 +120,12 @@ void algo_pushb2(t_stacks *stacks)
 	while(stacks->a)
 	{
 		while(count_pos_b(stacks))
-			stacks->action(RB, stacks);
+		{
+			if(checkdirection_b(stacks, count_pos_b(stacks)))
+				stacks->action(RB, stacks);
+			else
+				stacks->action(RRB, stacks);
+		}
 		stacks->action(PB, stacks);
 	}
 	while(stacks->b->index != max_b(stacks))
