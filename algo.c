@@ -64,14 +64,33 @@ int previous_index(t_stacks *stacks, int index)
 	}
 	return -1;
 }
+int size_stack(t_stacks *stacks, char c)
+{
+	t_node *node;
+	int size;
 
+	size = 0;
+	if (c =='a')
+		node = stacks->a;
+	else
+		node = stacks->b;
+
+	while(node)
+	{
+		size++;
+		node = node->next;
+	}
+	return (size);
+}
 int count_pos_b(t_node *node_,t_stacks *stacks)
 {
 	int max;
 	int min;
 	int count;
+	int size_b;
 	t_node *node;
 
+	size_b = size_stack(stacks,'b');
 	max = max_b(stacks);
 	min = min_b(stacks);
 	count = 0;
@@ -86,12 +105,14 @@ int count_pos_b(t_node *node_,t_stacks *stacks)
 	}
 	else
 	{
-		while(node->index != max)
+		while(node->index != max) //make it check direction
 		{
 			count++;
 			node = node->next;
 		}
 	}
+	if (count > size_b / 2)
+		count =  count - (size_b / 2);
 	return count;
 }
 
@@ -149,7 +170,7 @@ int checkdirection_a(t_stacks *stacks, int index)
 		node = node->next;
 		size++;
 	}
-	if (count < (size / 2))
+	if (count <= (size / 2))
 		return 1;
 	else
 		return 0;
@@ -190,7 +211,7 @@ void algo_pushb2(t_stacks *stacks)
 		}
 		while(count_pos_b(stacks->a,stacks))
 		{
-			if(checkdirection_b(stacks, count_pos_b(stacks->a,stacks)))
+			if( 0 < count_pos_b(stacks->a,stacks))
 				stacks->action(RB, stacks);
 			else
 				stacks->action(RRB, stacks);
