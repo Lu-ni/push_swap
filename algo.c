@@ -106,6 +106,8 @@ void algo_pushb2(t_stacks *stacks)
 			stacks->action(RB, stacks);
 		stacks->action(PB, stacks);
 	}
+	while(stacks->b->index != max_b(stacks))
+		stacks->action(RB, stacks);
 	while(stacks->b)
 		stacks->action(PA, stacks);
 }
