@@ -6,7 +6,7 @@
 /*   By: lnicolli <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 20:26:16 by lnicolli          #+#    #+#             */
-/*   Updated: 2023/11/18 20:26:26 by lnicolli         ###   ########.fr       */
+/*   Updated: 2023/11/18 20:39:19 by lnicolli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,14 +151,17 @@ int leastcost(t_stacks *stacks)
 			cost_ra = size_a - i;
 		else
 			cost_ra = i;
-		cost_rb =  count_pos_b(node, stacks);
-		if (cost_rb < 0)
-			cost_rb *= -1;
-		printf("cost a:%i\tcost_b:%i\tsum:%i\n", cost_ra,cost_rb, cost_ra + cost_rb);
-		if((cost_ra + cost_rb) < min_cost)
+		if (cost_ra < 15) // little hack to do max 30 search per run
 		{
-			min_cost = cost_ra + cost_rb;
-			index_min = node->index;
+			cost_rb =  count_pos_b(node, stacks);
+			if (cost_rb < 0)
+				cost_rb *= -1;
+			printf("cost a:%i\tcost_b:%i\tsum:%i\n", cost_ra,cost_rb, cost_ra + cost_rb);
+			if((cost_ra + cost_rb) < min_cost)
+			{
+				min_cost = cost_ra + cost_rb;
+				index_min = node->index;
+			}
 		}
 		node = node->next;
 		i++;
