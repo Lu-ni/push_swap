@@ -105,14 +105,14 @@ int count_pos_b(t_node *node_,t_stacks *stacks)
 	}
 	else
 	{
-		while(node->index != max) //make it check direction
+		while(node->index != max)
 		{
 			count++;
 			node = node->next;
 		}
 	}
 	if (count > size_b / 2)
-		count =  count - (size_b / 2);
+		count =  count - size_b;
 	return count;
 }
 
@@ -136,12 +136,13 @@ int leastcost(t_stacks *stacks)
 	while (node)
 	{
 		if (i > size_a / 2)
-			cost_ra = size_a - (i - size_a / 2);
+			cost_ra = size_a - i;
 		else
 			cost_ra = i;
 		cost_rb =  count_pos_b(node, stacks);
 		if (cost_rb < 0)
 			cost_rb *= -1;
+		printf("cost a:%i\tcost_b:%i\tsum:%i\n", cost_ra,cost_rb, cost_ra + cost_rb);
 		if((cost_ra + cost_rb) < min_cost)
 		{
 			min_cost = cost_ra + cost_rb;
