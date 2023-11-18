@@ -6,7 +6,7 @@
 /*   By: lnicolli <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 20:26:16 by lnicolli          #+#    #+#             */
-/*   Updated: 2023/11/18 21:39:38 by lnicolli         ###   ########.fr       */
+/*   Updated: 2023/11/18 22:24:05 by lnicolli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -300,6 +300,8 @@ void algo_pushb2(t_stacks *stacks)
 	}
 	while(stacks->b->index != max_b(stacks))
 		stacks->action(RB, stacks);
+	opti_action_stack(stacks);
+	stacks->action_stack[0] = -1;
 	while(stacks->b)
 		stacks->action(PA, stacks);
 }
