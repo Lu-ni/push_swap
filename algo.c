@@ -100,14 +100,12 @@ void algo_pushb2(t_stacks *stacks)
 	stacks->action(PB, stacks);
 	stacks->action(PB, stacks);
 	
-	print_stack(stacks);
 	while(stacks->a)
 	{
 		while(count_pos_b(stacks))
 			stacks->action(RB, stacks);
 		stacks->action(PB, stacks);
 	}
-	print_stack(stacks);
-	
-
+	while(stacks->b)
+		stacks->action(PA, stacks);
 }
