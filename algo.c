@@ -16,12 +16,12 @@
 
 int max_b(t_stacks *stacks)
 {
-	int max;
+	int     max;
 	t_node *node;
 	max = stacks->b->index;
 	node = stacks->b;
 
-	while(node)
+	while (node)
 	{
 		if (node->index > max)
 			max = node->index;
@@ -39,12 +39,12 @@ int last_index_b(t_stacks *stacks)
 }
 int min_b(t_stacks *stacks)
 {
-	int min;
+	int     min;
 	t_node *node;
 	min = stacks->b->index;
 	node = stacks->b;
 
-	while(node)
+	while (node)
 	{
 		if (node->index < min)
 			min = node->index;
@@ -55,7 +55,7 @@ int min_b(t_stacks *stacks)
 int previous_index(t_stacks *stacks, int index)
 {
 	t_node *node;
-	int last_i;
+	int     last_i;
 
 	node = stacks->b;
 	if (index == node->index)
@@ -79,93 +79,155 @@ int previous_index(t_stacks *stacks, int index)
 int size_stack(t_stacks *stacks, char c)
 {
 	t_node *node;
-	int size;
+	int     size;
 
 	size = 0;
-	if (c =='a')
+	if (c == 'a')
 		node = stacks->a;
 	else
 		node = stacks->b;
 
-	while(node)
+	while (node)
 	{
 		size++;
 		node = node->next;
 	}
 	return (size);
 }
-int count_pos_b(t_node *node_,t_stacks *stacks)
+int count_pos_b(t_node *node_, t_stacks *stacks)
 {
-	int max;
-	int min;
-	int count;
-	int size_b;
+	int     max;
+	int     min;
+	int     count;
+	int     size_b;
 	t_node *node;
 
-	size_b = size_stack(stacks,'b');
+	size_b = size_stack(stacks, 'b');
 	max = max_b(stacks);
 	min = min_b(stacks);
 	count = 0;
 	node = stacks->b;
 	if (min < node_->index && node_->index < max)
 	{
-		while(!(previous_index(stacks, node->index) > node_->index && node_->index > node->index))
-				{
-					count++;
-					node = node->next;
-				}
-	}
-	else
-	{
-		while(node->index != max)
+		while (!(previous_index(stacks, node->index) > node_->index && node_->index > node->index))
 		{
 			count++;
 			node = node->next;
 		}
 	}
-	if (count > size_b / 2)
-		count =  count - size_b;
+	else
+	{
+		while (node->index != max)
+		{
+			count++;
+			node = node->next;
+		}
+	}
 	return count;
 }
-
-int leastcost(t_stacks *stacks)
+int min(int a, int b)
 {
-	int cost_ra;
-	int i;
-	int cost_rb;
-	int min_cost;
-	int index_min;
+	if (a < b)
+		return (a);
+	else
+		return (b);
+}
+void find_min_cost(t_cost *cost)
+{
+	t_cost tmp;
+
+	tmp.min_cost = 1000000;
+	tmp.ra = 0;
+	tmp.rb = 0;
+	tmp.rr = 0;
+	tmp.rra = 0;
+	tmp.rrb = 0;
+	tmp.rrr = 0;
+	if (cost->ra + cost->rrb < tmp.min_cost)
+	{
+		tmp.ra = cost->ra;
+		tmp.rb = 0;
+		tmp.rra = 0;
+		tmp.rrb = cost->rrb;
+		tmp.min_cost = tmp.ra + tmp.rrb;
+	}
+	if (cost->rra + cost->rb < tmp.min_cost)
+	{
+		tmp.ra = 0;
+		tmp.rb = cost->rb;
+		tmp.rra = cost->rra;
+		tmp.rrb = 0;
+		tmp.min_cost = tmp.rb + tmp.rra;
+	}
+	if (cost->ra + cost->rb - min(cost->ra, cost->rb) < tmp.min_cost)
+	{
+		tmp.ra = cost->ra - min(cost->ra, cost->rb);
+		tmp.rb = cost->rb - min(cost->ra, cost->rb);
+		tmp.rra = 0;
+		tmp.rrb = 0;
+		tmp.rr = min(cost->ra, cost->rb);
+		tmp.min_cost = cost->ra + cost->rb - min(cost->ra, cost->rb);
+	}
+	if (cost->rra + cost->rrb - min(cost->rra, cost->rrb) < tmp.min_cost)
+	{
+		tmp.ra = 0;
+		tmp.rb = 0;
+		tmp.rra = cost->rra - min(cost->rra, cost->rrb);
+		tmp.rrb = cost->rrb - min(cost->rra, cost->rrb);
+		tmp.rr = 0;
+		tmp.rrr = min(cost->rra, cost->rrb);
+		tmp.min_cost = cost->ra + cost->rb - min(cost->ra, cost->rb);
+	}
+
+	cost->ra = tmp.ra;
+	cost->rb = tmp.rb;
+	cost->rra = tmp.rra;
+	cost->rrb = tmp.rrb;
+	cost->rr = tmp.rr;
+	cost->rrr = tmp.rrr;
+	cost->min_cost = tmp.min_cost;
+}
+void copy_t_cost(t_cost *dest, t_cost *src)
+{
+	dest->min_cost = src->min_cost;
+	dest->ra = src->ra;
+	dest->rb = src->rb;
+	dest->rr = src->rr;
+	dest->rra = src->rra;
+	dest->rrb = src->rrb;
+	dest->rrr = src->rrr;
+}
+
+t_cost leastcost(t_stacks *stacks, t_cost *final_cost)
+{
+	t_cost  tmp;
+	t_cost  min_cost;
+	int     i;
 	t_node *node;
-	int size_a;
+	int     size_a;
+	int     size_b;
 
 	size_a = size_stack(stacks, 'a');
+	size_b = size_stack(stacks, 'b');
 	i = 0;
-	cost_ra = 0;
-	min_cost = 100000000;
-	index_min = -1;
 	node = stacks->b;
 	node = stacks->a;
+	min_cost.min_cost = 10000000;
 	while (node)
 	{
-		if (i > size_a / 2)
-			cost_ra = size_a - i;
-		else
-			cost_ra = i;
-		if (cost_ra < 15) // little hack to do max 30 search per run
-		{
-			cost_rb =  count_pos_b(node, stacks);
-			if (cost_rb < 0)
-				cost_rb *= -1;
-			if((cost_ra + cost_rb) < min_cost)
-			{
-				min_cost = cost_ra + cost_rb;
-				index_min = node->index;
-			}
-		}
+		tmp.ra = i;
+		tmp.rra = size_a - i;
+		tmp.rb = count_pos_b(node, stacks);
+		tmp.rrb = size_b - tmp.rb;
+		find_min_cost(&tmp);
+
+		if (tmp.min_cost < min_cost.min_cost)
+			copy_t_cost(&min_cost, &tmp);
 		node = node->next;
 		i++;
 	}
-	return(index_min);	
+	copy_t_cost(final_cost, &min_cost);
+	return (min_cost);
 }
 
 int checkdirection_a(t_stacks *stacks, int index)
@@ -208,7 +270,7 @@ int checkdirection_b(t_stacks *stacks, int count)
 }
 void opti_action_stack(t_stacks *stacks)
 {
-	int i; 
+	int i;
 	int count_RA;
 	int count_RB;
 	int count_RRA;
@@ -219,7 +281,7 @@ void opti_action_stack(t_stacks *stacks)
 	count_RB = 0;
 	count_RRA = 0;
 	count_RRB = 0;
-	while(stacks->action_stack[i] != -1)
+	while (stacks->action_stack[i] != -1)
 	{
 		if (stacks->action_stack[i] == RA)
 			count_RA++;
@@ -233,7 +295,7 @@ void opti_action_stack(t_stacks *stacks)
 	}
 	if (count_RA > count_RB)
 	{
-		count =  count_RB;
+		count = count_RB;
 		while (count-- > 0)
 			printf("rr\n");
 		count = count_RA - count_RB;
@@ -242,7 +304,7 @@ void opti_action_stack(t_stacks *stacks)
 	}
 	else
 	{
-		count =  count_RA;
+		count = count_RA;
 		while (count-- > 0)
 			printf("rr\n");
 		count = count_RB - count_RA;
@@ -252,7 +314,7 @@ void opti_action_stack(t_stacks *stacks)
 
 	if (count_RRA > count_RRB)
 	{
-		count =  count_RRB;
+		count = count_RRB;
 		while (count-- > 0)
 			printf("rrr\n");
 		count = count_RRA - count_RRB;
@@ -261,7 +323,7 @@ void opti_action_stack(t_stacks *stacks)
 	}
 	else
 	{
-		count =  count_RRA;
+		count = count_RRA;
 		while (count-- > 0)
 			printf("rrr\n");
 		count = count_RRB - count_RRA;
@@ -271,37 +333,31 @@ void opti_action_stack(t_stacks *stacks)
 }
 void algo_pushb2(t_stacks *stacks)
 {
+	t_cost cost;
 	stacks->action(PB, stacks);
 	stacks->action(PB, stacks);
-	int min_index;
-	stacks->action_stack[0] = -1;
-	
-	while(stacks->a)
-	{
-		min_index = leastcost(stacks);
 
-		while(stacks->a->index != min_index)
-		{
-			if(checkdirection_a(stacks, min_index))
-				stacks->action(RA, stacks);
-			else
-				stacks->action(RRA, stacks);
-		}
-		while(count_pos_b(stacks->a,stacks))
-		{
-			if( 0 < count_pos_b(stacks->a,stacks))
-				stacks->action(RB, stacks);
-			else
-				stacks->action(RRB, stacks);
-		}
-		opti_action_stack(stacks);
-		stacks->action_stack[0] = -1;
+	while (stacks->a)
+	{
+		leastcost(stacks, &cost);
+
+		while (cost.ra--)
+			stacks->action(RA, stacks);
+		while (cost.rb--)
+			stacks->action(RB, stacks);
+		while (cost.rr--)
+			stacks->action(RR, stacks);
+		while (cost.rra--)
+			stacks->action(RRA, stacks);
+		while (cost.rrb--)
+			stacks->action(RRB, stacks);
+		while (cost.rrr--)
+			stacks->action(RRR, stacks);
+
 		stacks->action(PB, stacks);
 	}
-	while(stacks->b->index != max_b(stacks))
+	while (stacks->b->index != max_b(stacks))
 		stacks->action(RB, stacks);
-	opti_action_stack(stacks);
-	stacks->action_stack[0] = -1;
-	while(stacks->b)
+	while (stacks->b)
 		stacks->action(PA, stacks);
 }

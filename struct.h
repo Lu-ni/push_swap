@@ -24,6 +24,16 @@ typedef struct s_node
 	int            i_relative;
 	struct s_node *next;
 } t_node;
+typedef struct s_cost
+{
+	int ra;
+	int rb;
+	int rr;
+	int rra;
+	int rrb;
+	int rrr;
+	int min_cost;
+} t_cost;
 
 typedef void (*t_action)(int, struct s_stacks *);
 
