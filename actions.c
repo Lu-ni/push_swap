@@ -13,7 +13,8 @@ void action_r(t_stacks *stacks, char stack)
 		node1->next = (t_node *) 0;
 		node2 = lstlast(stacks->a);
 		node2->next = node1;
-		printf("ra\n");
+		if (stack == 'a')
+			printf("ra\n");
 	}
 	if ((stack == 'b' || stack == 'r') && stacks->b && stacks->b->next)
 	{
@@ -22,8 +23,12 @@ void action_r(t_stacks *stacks, char stack)
 		node1->next = (t_node *) 0;
 		node2 = lstlast(stacks->b);
 		node2->next = node1;
-		printf("rb\n");
+		if (stack == 'b')
+			printf("rb\n");
 	}
+
+	if (stack == 'r')
+		printf("rr\n");
 }
 void action_rr(t_stacks *stacks, char stack)
 {
@@ -38,7 +43,8 @@ void action_rr(t_stacks *stacks, char stack)
 		while (node2->next != node1)
 			node2 = node2->next;
 		node2->next = (t_node *) 0;
-		printf("rra\n");
+		if (stack == 'a')
+			printf("rra\n");
 	}
 	if ((stack == 'b' || stack == 'r') && stacks->b && stacks->b->next)
 	{
@@ -49,8 +55,11 @@ void action_rr(t_stacks *stacks, char stack)
 		while (node2->next != node1)
 			node2 = node2->next;
 		node2->next = (t_node *) 0;
-		printf("rrb\n");
+		if (stack == 'b')
+			printf("rrb\n");
 	}
+	if (stack == 'r')
+		printf("rrr\n");
 }
 void action_p(t_stacks *stacks, char stack)
 {
@@ -93,7 +102,7 @@ void action_s(t_stacks *stacks, char stack)
 		node1->next = node2->next;
 		node2->next = node1;
 		stacks->b = node2;
-		printf("sa\n");
+		printf("sb\n");
 	}
 }
 
