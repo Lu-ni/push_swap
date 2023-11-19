@@ -2,16 +2,6 @@
 #include "struct.h"
 #include <stdio.h>
 
-void add_action2stack(t_stacks *stacks, int action)
-{
-	int i_tab;
-	i_tab = 0;
-	while (stacks->action_stack[i_tab] != -1)
-		i_tab++;
-	stacks->action_stack[i_tab++] = action;
-	stacks->action_stack[i_tab] = -1;
-}
-
 void action_r(t_stacks *stacks, char stack)
 {
 	t_node *node1;
@@ -23,7 +13,6 @@ void action_r(t_stacks *stacks, char stack)
 		node1->next = (t_node *) 0;
 		node2 = lstlast(stacks->a);
 		node2->next = node1;
-		// add_action2stack(stacks, RA);
 		printf("ra\n");
 	}
 	if ((stack == 'b' || stack == 'r') && stacks->b && stacks->b->next)
@@ -33,7 +22,6 @@ void action_r(t_stacks *stacks, char stack)
 		node1->next = (t_node *) 0;
 		node2 = lstlast(stacks->b);
 		node2->next = node1;
-		// add_action2stack(stacks, RB);
 		printf("rb\n");
 	}
 }
@@ -50,7 +38,6 @@ void action_rr(t_stacks *stacks, char stack)
 		while (node2->next != node1)
 			node2 = node2->next;
 		node2->next = (t_node *) 0;
-		// add_action2stack(stacks, RRA);
 		printf("rra\n");
 	}
 	if ((stack == 'b' || stack == 'r') && stacks->b && stacks->b->next)
@@ -62,7 +49,6 @@ void action_rr(t_stacks *stacks, char stack)
 		while (node2->next != node1)
 			node2 = node2->next;
 		node2->next = (t_node *) 0;
-		// add_action2stack(stacks, RRB);
 		printf("rrb\n");
 	}
 }

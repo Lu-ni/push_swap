@@ -132,6 +132,16 @@ int min(int a, int b)
 	else
 		return (b);
 }
+void copy_t_cost(t_cost *dest, t_cost *src)
+{
+	dest->min_cost = src->min_cost;
+	dest->ra = src->ra;
+	dest->rb = src->rb;
+	dest->rr = src->rr;
+	dest->rra = src->rra;
+	dest->rrb = src->rrb;
+	dest->rrr = src->rrr;
+}
 void find_min_cost(t_cost *cost)
 {
 	t_cost tmp;
@@ -179,23 +189,7 @@ void find_min_cost(t_cost *cost)
 		tmp.min_cost = cost->ra + cost->rb - min(cost->ra, cost->rb);
 	}
 
-	cost->ra = tmp.ra;
-	cost->rb = tmp.rb;
-	cost->rra = tmp.rra;
-	cost->rrb = tmp.rrb;
-	cost->rr = tmp.rr;
-	cost->rrr = tmp.rrr;
-	cost->min_cost = tmp.min_cost;
-}
-void copy_t_cost(t_cost *dest, t_cost *src)
-{
-	dest->min_cost = src->min_cost;
-	dest->ra = src->ra;
-	dest->rb = src->rb;
-	dest->rr = src->rr;
-	dest->rra = src->rra;
-	dest->rrb = src->rrb;
-	dest->rrr = src->rrr;
+	copy_t_cost(cost, &tmp);
 }
 
 t_cost leastcost(t_stacks *stacks, t_cost *final_cost)
@@ -230,107 +224,6 @@ t_cost leastcost(t_stacks *stacks, t_cost *final_cost)
 	return (min_cost);
 }
 
-int checkdirection_a(t_stacks *stacks, int index)
-{
-	int     count;
-	int     size;
-	t_node *node;
-
-	count = 0;
-	size = 0;
-	node = stacks->a;
-	while (node)
-	{
-		if (node->index == index)
-			count = size;
-		node = node->next;
-		size++;
-	}
-	if (count <= (size / 2))
-		return 1;
-	else
-		return 0;
-}
-int checkdirection_b(t_stacks *stacks, int count)
-{
-	int     size;
-	t_node *node;
-
-	size = 0;
-	node = stacks->b;
-	while (node)
-	{
-		node = node->next;
-		size++;
-	}
-	if (count < (size / 2))
-		return 1;
-	else
-		return 0;
-}
-void opti_action_stack(t_stacks *stacks)
-{
-	int i;
-	int count_RA;
-	int count_RB;
-	int count_RRA;
-	int count_RRB;
-	int count = 0;
-	i = 0;
-	count_RA = 0;
-	count_RB = 0;
-	count_RRA = 0;
-	count_RRB = 0;
-	while (stacks->action_stack[i] != -1)
-	{
-		if (stacks->action_stack[i] == RA)
-			count_RA++;
-		else if (stacks->action_stack[i] == RB)
-			count_RB++;
-		else if (stacks->action_stack[i] == RRA)
-			count_RRA++;
-		else if (stacks->action_stack[i] == RRB)
-			count_RRB++;
-		i++;
-	}
-	if (count_RA > count_RB)
-	{
-		count = count_RB;
-		while (count-- > 0)
-			printf("rr\n");
-		count = count_RA - count_RB;
-		while (count-- > 0)
-			printf("ra\n");
-	}
-	else
-	{
-		count = count_RA;
-		while (count-- > 0)
-			printf("rr\n");
-		count = count_RB - count_RA;
-		while (count-- > 0)
-			printf("rb\n");
-	}
-
-	if (count_RRA > count_RRB)
-	{
-		count = count_RRB;
-		while (count-- > 0)
-			printf("rrr\n");
-		count = count_RRA - count_RRB;
-		while (count-- > 0)
-			printf("rra\n");
-	}
-	else
-	{
-		count = count_RRA;
-		while (count-- > 0)
-			printf("rrr\n");
-		count = count_RRB - count_RRA;
-		while (count-- > 0)
-			printf("rrb\n");
-	}
-}
 void algo_pushb2(t_stacks *stacks)
 {
 	t_cost cost;

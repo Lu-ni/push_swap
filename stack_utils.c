@@ -127,15 +127,15 @@ void print_stack(t_stacks *stacks)
 
 	a = stacks->a;
 	b = stacks->b;
-	printf("--------\n");
-	printf("|a|\tindex\tdelta\tval\ti\ti_rel\n");
+	printf("--------------------\n");
 	while (a || b)
 	{
 		if (a)
 		{
-			printf("a\t%i\t%i\t%i\t%i\t%i\t", a->index, a->delta, a->val, a->i, a->i_relative);
+			printf("a:%i", a->index);
 			a = a->next;
 		}
+		printf("\t");
 		if (b)
 		{
 			printf("b:%i", b->index);
@@ -143,4 +143,5 @@ void print_stack(t_stacks *stacks)
 		}
 		printf("\n");
 	}
+	printf("--------------------\n");
 }
