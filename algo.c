@@ -186,7 +186,7 @@ void find_min_cost(t_cost *cost)
 		tmp.rrb = cost->rrb - min(cost->rra, cost->rrb);
 		tmp.rr = 0;
 		tmp.rrr = min(cost->rra, cost->rrb);
-		tmp.min_cost = cost->ra + cost->rb - min(cost->ra, cost->rb);
+		tmp.min_cost = cost->rra + cost->rrb - min(cost->rra, cost->rrb);
 	}
 
 	copy_t_cost(cost, &tmp);
