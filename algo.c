@@ -107,9 +107,9 @@ int count_pos_b(t_node *node_, t_stacks *stacks)
 	min = min_b(stacks);
 	count = 0;
 	node = stacks->b;
-	if (min < node_->index && node_->index < max)
+	if (min <= node_->index && node_->index <= max)
 	{
-		while (!(previous_index(stacks, node->index) > node_->index && node_->index > node->index))
+		while (!(previous_index(stacks, node->index) >= node_->index && node_->index >= node->index))
 		{
 			count++;
 			node = node->next;
@@ -192,6 +192,24 @@ void find_min_cost(t_cost *cost)
 	copy_t_cost(cost, &tmp);
 }
 
+int b_direction(int index, t_stacks *stacks)
+{
+	t_node *node;
+	int     count;
+	count = 0;
+	node = stacks->b;
+
+	while (node && node->index != index)
+	{
+		count++;
+		node = node->next;
+	}
+	if (count > size_stack(stacks, 'b') / 2)
+		return 0;
+	else
+		return 1;
+}
+
 t_cost leastcost(t_stacks *stacks, t_cost *final_cost)
 {
 	t_cost  tmp;
@@ -255,8 +273,18 @@ void algo_pushb2(t_stacks *stacks)
 	}
 	stacks->n = size_stack(stacks, 'a');
 	algo_low_n(stacks);
-	while (stacks->b->index != max_b(stacks))
-		stacks->action(RB, stacks);
+	//
+	if (b_direction(max_b(stacks), stacks))
+	{
+		while (stacks->b->index != max_b(stacks))
+			stacks->action(RB, stacks);
+	}
+	else
+	{
+		while (stacks->b->index != max_b(stacks))
+			stacks->action(RRB, stacks);
+	}
+	//
 	last_value[0] = stacks->a->index;
 	last_value[1] = stacks->a->next->index;
 	last_value[2] = stacks->a->next->next->index;

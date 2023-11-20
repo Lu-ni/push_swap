@@ -39,6 +39,8 @@ int main(int argc, char **argv)
 		return (1); // the stack passed as argv contain incorrect value
 	parser(argc, argv, &stacks);
 	add_index(&stacks);
+	if (check_sorted(&stacks))
+		return (0);
 	////// done with mandatory stuff
 	if (stacks.n < 4)
 		algo_low_n(&stacks);
