@@ -227,10 +227,13 @@ t_cost leastcost(t_stacks *stacks, t_cost *final_cost)
 void algo_pushb2(t_stacks *stacks)
 {
 	t_cost cost;
-	stacks->action(PB, stacks);
-	stacks->action(PB, stacks);
+	int    last_value[3];
 
-	while (stacks->a)
+	stacks->action(PB, stacks);
+	if (stacks->n > 4)
+		stacks->action(PB, stacks);
+	stacks->n = size_stack(stacks, 'a');
+	while (stacks->n > 3)
 	{
 		leastcost(stacks, &cost);
 
@@ -248,9 +251,26 @@ void algo_pushb2(t_stacks *stacks)
 			stacks->action(RRR, stacks);
 
 		stacks->action(PB, stacks);
+		stacks->n = size_stack(stacks, 'a');
 	}
+	stacks->n = size_stack(stacks, 'a');
+	algo_low_n(stacks);
 	while (stacks->b->index != max_b(stacks))
 		stacks->action(RB, stacks);
-	while (stacks->b)
+	last_value[0] = stacks->a->index;
+	last_value[1] = stacks->a->next->index;
+	last_value[2] = stacks->a->next->next->index;
+	while (stacks->b && stacks->b->index > last_value[2])
 		stacks->action(PA, stacks);
+	stacks->action(RRA, stacks);
+	while (stacks->b && stacks->b->index > last_value[1])
+		stacks->action(PA, stacks);
+	stacks->action(RRA, stacks);
+	while (stacks->b && stacks->b->index > last_value[0])
+		stacks->action(PA, stacks);
+	stacks->action(RRA, stacks);
+	while (stacks->b)
+	{
+		stacks->action(PA, stacks);
+	}
 }

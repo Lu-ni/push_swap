@@ -40,12 +40,10 @@ int main(int argc, char **argv)
 	parser(argc, argv, &stacks);
 	add_index(&stacks);
 	////// done with mandatory stuff
-	// algo_insert_sort(&stacks);
 	if (stacks.n < 4)
 		algo_low_n(&stacks);
 	else
 		algo_pushb2(&stacks);
-	// alog_delta_sort(&stacks);
 
 	return (0);
 }

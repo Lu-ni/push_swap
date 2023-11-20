@@ -11,3 +11,4 @@ void add_index(t_stacks *stacks);
 void print_stack(t_stacks *stacks);
 void algo_pushb2(t_stacks *stacks);
 void algo_low_n(t_stacks *stacks);
+void sort_n_3(t_stacks *stacks);

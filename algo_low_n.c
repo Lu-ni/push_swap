@@ -4,18 +4,29 @@
 void sort_n_3(t_stacks *stacks)
 {
 	t_node *n;
-	n = stacks->a;
+	int     a;
+	int     b;
+	int     c;
 
-	if (n->index < n->next->index && n->index < n->next->next->index)
+	n = stacks->a;
+	a = n->index;
+	b = n->next->index;
+	c = n->next->next->index;
+
+	if (a < b && a < c && b < c)
+	{
+		return;
+	}
+	else if (a < b && a < c && b > c)
 	{
 		stacks->action(SA, stacks);
 		stacks->action(RA, stacks);
 	}
-	else if (n->index > n->next->index && n->index < n->next->next->index)
+	else if (a > b && a < c && b < c)
 		stacks->action(SA, stacks);
-	else if (n->index < n->next->index && n->index > n->next->next->index)
+	else if (a < b && a > c && b > c)
 		stacks->action(RRA, stacks);
-	else if (n->index > n->next->index && n->next->index < n->next->next->index)
+	else if (a > b && a > c && b < c)
 		stacks->action(RA, stacks);
 	else
 	{
