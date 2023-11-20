@@ -39,13 +39,12 @@ int main(int argc, char **argv)
 		return (1); // the stack passed as argv contain incorrect value
 	parser(argc, argv, &stacks);
 	add_index(&stacks);
-	add_delta(&stacks);
-	add_i(&stacks);
-	set_zero_relative(&stacks);
-	add_i_relative(&stacks);
 	////// done with mandatory stuff
 	// algo_insert_sort(&stacks);
-	algo_pushb2(&stacks);
+	if (stacks.n < 4)
+		algo_low_n(&stacks);
+	else
+		algo_pushb2(&stacks);
 	// alog_delta_sort(&stacks);
 
 	return (0);

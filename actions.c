@@ -130,7 +130,4 @@ void action_parser(int act, t_stacks *stacks)
 		action_rr(stacks, 'b');
 	if (act == RRR)
 		action_rr(stacks, 'r');
-	add_delta(stacks);
-	add_i(stacks);
-	add_i_relative(stacks);
 }

@@ -11,9 +11,6 @@ t_node *lstnew(int content)
 		return ((t_node *) 0);
 	node->val = content;
 	node->index = -1;
-	node->delta = 0;
-	node->i = -1;
-	node->i_relative = -1;
 	node->next = (t_node *) 0;
 	return (node);
 }
