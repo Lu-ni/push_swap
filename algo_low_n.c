@@ -1,21 +1,32 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   algo_low_n.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lnicolli <marvin@42lausanne.ch>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/11/22 16:34:12 by lnicolli          #+#    #+#             */
+/*   Updated: 2023/11/22 16:34:21 by lnicolli         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "node_utils.h"
 #include "struct.h"
-#include <stdio.h>
-void sort_n_3(t_stacks *stacks)
+
+void	sort_n_3(t_stacks *stacks)
 {
-	t_node *n;
-	int     a;
-	int     b;
-	int     c;
+	t_node	*n;
+	int		a;
+	int		b;
+	int		c;
 
 	n = stacks->a;
 	a = n->index;
 	b = n->next->index;
 	c = n->next->next->index;
-
 	if (a < b && a < c && b < c)
 	{
-		return;
+		return ;
 	}
 	else if (a < b && a < c && b > c)
 	{
@@ -34,10 +45,11 @@ void sort_n_3(t_stacks *stacks)
 		stacks->action(SA, stacks);
 	}
 }
-void algo_low_n(t_stacks *stacks)
+
+void	algo_low_n(t_stacks *stacks)
 {
 	if (check_sorted(stacks))
-		return;
+		return ;
 	else if (stacks->n == 2)
 		stacks->action(SA, stacks);
 	else if (stacks->n == 3)

@@ -1,39 +1,52 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   actions.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lnicolli <marvin@42lausanne.ch>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/11/22 16:31:46 by lnicolli          #+#    #+#             */
+/*   Updated: 2023/11/22 16:33:42 by lnicolli         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "node_utils.h"
 #include "struct.h"
-#include <stdio.h>
 
-void action_r(t_stacks *stacks, char stack)
+void	action_r(t_stacks *stacks, char stack)
 {
-	t_node *node1;
-	t_node *node2;
+	t_node	*node1;
+	t_node	*node2;
+
 	if ((stack == 'a' || stack == 'r') && stacks->a && stacks->a->next)
 	{
 		node1 = stacks->a;
 		stacks->a = node1->next;
-		node1->next = (t_node *) 0;
+		node1->next = (t_node *)0;
 		node2 = lstlast(stacks->a);
 		node2->next = node1;
 		if (stack == 'a')
-			printf("ra\n");
+			write_str("ra", 1);
 	}
 	if ((stack == 'b' || stack == 'r') && stacks->b && stacks->b->next)
 	{
 		node1 = stacks->b;
 		stacks->b = node1->next;
-		node1->next = (t_node *) 0;
+		node1->next = (t_node *)0;
 		node2 = lstlast(stacks->b);
 		node2->next = node1;
 		if (stack == 'b')
-			printf("rb\n");
+			write_str("rb", 1);
 	}
-
 	if (stack == 'r')
-		printf("rr\n");
+		write_str("rr", 1);
 }
-void action_rr(t_stacks *stacks, char stack)
+
+void	action_rr(t_stacks *stacks, char stack)
 {
-	t_node *node1;
-	t_node *node2;
+	t_node	*node1;
+	t_node	*node2;
+
 	if ((stack == 'a' || stack == 'r') && stacks->a && stacks->a->next)
 	{
 		node1 = lstlast(stacks->a);
@@ -42,9 +55,9 @@ void action_rr(t_stacks *stacks, char stack)
 		node2 = node1;
 		while (node2->next != node1)
 			node2 = node2->next;
-		node2->next = (t_node *) 0;
+		node2->next = (t_node *)0;
 		if (stack == 'a')
-			printf("rra\n");
+			write_str("rra", 1);
 	}
 	if ((stack == 'b' || stack == 'r') && stacks->b && stacks->b->next)
 	{
@@ -54,23 +67,25 @@ void action_rr(t_stacks *stacks, char stack)
 		node2 = node1;
 		while (node2->next != node1)
 			node2 = node2->next;
-		node2->next = (t_node *) 0;
+		node2->next = (t_node *)0;
 		if (stack == 'b')
-			printf("rrb\n");
+			write_str("rrb", 1);
 	}
 	if (stack == 'r')
-		printf("rrr\n");
+		write_str("rrr", 1);
 }
-void action_p(t_stacks *stacks, char stack)
+
+void	action_p(t_stacks *stacks, char stack)
 {
-	t_node *node1;
+	t_node	*node1;
+
 	if (stack == 'b' && stacks->a)
 	{
 		node1 = stacks->a;
 		stacks->a = node1->next;
 		node1->next = stacks->b;
 		stacks->b = node1;
-		printf("pb\n");
+		write_str("pb", 1);
 	}
 	if (stack == 'a' && stacks->b)
 	{
@@ -78,13 +93,14 @@ void action_p(t_stacks *stacks, char stack)
 		stacks->b = node1->next;
 		node1->next = stacks->a;
 		stacks->a = node1;
-		printf("pa\n");
+		write_str("pa", 1);
 	}
 }
-void action_s(t_stacks *stacks, char stack)
+
+void	action_s(t_stacks *stacks, char stack)
 {
-	t_node *node1;
-	t_node *node2;
+	t_node	*node1;
+	t_node	*node2;
 
 	if (stack == 'a' || stack == 's')
 	{
@@ -93,7 +109,7 @@ void action_s(t_stacks *stacks, char stack)
 		node1->next = node2->next;
 		node2->next = node1;
 		stacks->a = node2;
-		printf("sa\n");
+		write_str("sa", 1);
 	}
 	if (stack == 'b' || stack == 's')
 	{
@@ -102,11 +118,11 @@ void action_s(t_stacks *stacks, char stack)
 		node1->next = node2->next;
 		node2->next = node1;
 		stacks->b = node2;
-		printf("sb\n");
+		write_str("sb", 1);
 	}
 }
 
-void action_parser(int act, t_stacks *stacks)
+void	action_parser(int act, t_stacks *stacks)
 {
 	if (act == SA)
 		action_s(stacks, 'a');

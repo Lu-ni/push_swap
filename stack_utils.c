@@ -1,12 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   stack_utils.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lnicolli <marvin@42lausanne.ch>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/11/22 16:31:31 by lnicolli          #+#    #+#             */
+/*   Updated: 2023/11/22 16:31:32 by lnicolli         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "node_utils.h"
 #include "struct.h"
 #include <limits.h>
-#include <stdio.h>
 
-int check_sorted(t_stacks *stacks)
+int	check_sorted(t_stacks *stacks)
 {
-	int     index;
-	t_node *node;
+	int		index;
+	t_node	*node;
 
 	index = 0;
 	node = stacks->a;
@@ -25,11 +36,11 @@ int check_sorted(t_stacks *stacks)
 	return (1);
 }
 
-void add_index(t_stacks *stacks)
+void	add_index(t_stacks *stacks)
 {
-	int     min;
-	t_node *node;
-	int     i;
+	int		min;
+	t_node	*node;
+	int		i;
 
 	i = 0;
 	node = stacks->a;
@@ -52,29 +63,4 @@ void add_index(t_stacks *stacks)
 		}
 		min = INT_MAX;
 	}
-}
-void print_stack(t_stacks *stacks)
-{
-	t_node *a;
-	t_node *b;
-
-	a = stacks->a;
-	b = stacks->b;
-	printf("--------------------\n");
-	while (a || b)
-	{
-		if (a)
-		{
-			printf("a:%i", a->index);
-			a = a->next;
-		}
-		printf("\t");
-		if (b)
-		{
-			printf("b:%i", b->index);
-			b = b->next;
-		}
-		printf("\n");
-	}
-	printf("--------------------\n");
 }

@@ -12,15 +12,14 @@
 
 #include "node_utils.h"
 #include "struct.h"
-#include <stdio.h>
 
-int max_b(t_stacks *stacks)
+int	max_b(t_stacks *stacks)
 {
-	int     max;
-	t_node *node;
+	int		max;
+	t_node	*node;
+
 	max = stacks->b->index;
 	node = stacks->b;
-
 	while (node)
 	{
 		if (node->index > max)
@@ -29,21 +28,22 @@ int max_b(t_stacks *stacks)
 	}
 	return (max);
 }
-int last_index_b(t_stacks *stacks)
+int	last_index_b(t_stacks *stacks)
 {
-	t_node *node;
+	t_node	*node;
+
 	node = stacks->b;
 	while (node && node->next)
 		node = node->next;
-	return node->index;
+	return (node->index);
 }
-int min_b(t_stacks *stacks)
+int	min_b(t_stacks *stacks)
 {
-	int     min;
-	t_node *node;
+	int		min;
+	t_node	*node;
+
 	min = stacks->b->index;
 	node = stacks->b;
-
 	while (node)
 	{
 		if (node->index < min)
@@ -52,10 +52,10 @@ int min_b(t_stacks *stacks)
 	}
 	return (min);
 }
-int previous_index(t_stacks *stacks, int index)
+int	previous_index(t_stacks *stacks, int index)
 {
-	t_node *node;
-	int     last_i;
+	t_node	*node;
+	int		last_i;
 
 	node = stacks->b;
 	if (index == node->index)
@@ -74,19 +74,18 @@ int previous_index(t_stacks *stacks, int index)
 		last_i = node->index;
 		node = node->next;
 	}
-	return -1;
+	return (-1);
 }
-int size_stack(t_stacks *stacks, char c)
+int	size_stack(t_stacks *stacks, char c)
 {
-	t_node *node;
-	int     size;
+	t_node	*node;
+	int		size;
 
 	size = 0;
 	if (c == 'a')
 		node = stacks->a;
 	else
 		node = stacks->b;
-
 	while (node)
 	{
 		size++;
@@ -94,13 +93,13 @@ int size_stack(t_stacks *stacks, char c)
 	}
 	return (size);
 }
-int count_pos_b(t_node *node_, t_stacks *stacks)
+int	count_pos_b(t_node *node_, t_stacks *stacks)
 {
-	int     max;
-	int     min;
-	int     count;
-	int     size_b;
-	t_node *node;
+	int		max;
+	int		min;
+	int		count;
+	int		size_b;
+	t_node	*node;
 
 	size_b = size_stack(stacks, 'b');
 	max = max_b(stacks);
@@ -109,7 +108,8 @@ int count_pos_b(t_node *node_, t_stacks *stacks)
 	node = stacks->b;
 	if (min <= node_->index && node_->index <= max)
 	{
-		while (!(previous_index(stacks, node->index) >= node_->index && node_->index >= node->index))
+		while (!(previous_index(stacks, node->index) >= node_->index
+				&& node_->index >= node->index))
 		{
 			count++;
 			node = node->next;
@@ -123,16 +123,16 @@ int count_pos_b(t_node *node_, t_stacks *stacks)
 			node = node->next;
 		}
 	}
-	return count;
+	return (count);
 }
-int min(int a, int b)
+int	min(int a, int b)
 {
 	if (a < b)
 		return (a);
 	else
 		return (b);
 }
-void copy_t_cost(t_cost *dest, t_cost *src)
+void	copy_t_cost(t_cost *dest, t_cost *src)
 {
 	dest->min_cost = src->min_cost;
 	dest->ra = src->ra;
@@ -142,9 +142,9 @@ void copy_t_cost(t_cost *dest, t_cost *src)
 	dest->rrb = src->rrb;
 	dest->rrr = src->rrr;
 }
-void find_min_cost(t_cost *cost)
+void	find_min_cost(t_cost *cost)
 {
-	t_cost tmp;
+	t_cost	tmp;
 
 	tmp.min_cost = 1000000;
 	tmp.ra = 0;
@@ -188,36 +188,35 @@ void find_min_cost(t_cost *cost)
 		tmp.rrr = min(cost->rra, cost->rrb);
 		tmp.min_cost = cost->rra + cost->rrb - min(cost->rra, cost->rrb);
 	}
-
 	copy_t_cost(cost, &tmp);
 }
 
-int b_direction(int index, t_stacks *stacks)
+int	b_direction(int index, t_stacks *stacks)
 {
-	t_node *node;
-	int     count;
+	t_node	*node;
+	int		count;
+
 	count = 0;
 	node = stacks->b;
-
 	while (node && node->index != index)
 	{
 		count++;
 		node = node->next;
 	}
 	if (count > size_stack(stacks, 'b') / 2)
-		return 0;
+		return (0);
 	else
-		return 1;
+		return (1);
 }
 
-t_cost leastcost(t_stacks *stacks, t_cost *final_cost)
+t_cost	leastcost(t_stacks *stacks, t_cost *final_cost)
 {
-	t_cost  tmp;
-	t_cost  min_cost;
-	int     i;
-	t_node *node;
-	int     size_a;
-	int     size_b;
+	t_cost	tmp;
+	t_cost	min_cost;
+	int		i;
+	t_node	*node;
+	int		size_a;
+	int		size_b;
 
 	size_a = size_stack(stacks, 'a');
 	size_b = size_stack(stacks, 'b');
@@ -232,7 +231,6 @@ t_cost leastcost(t_stacks *stacks, t_cost *final_cost)
 		tmp.rb = count_pos_b(node, stacks);
 		tmp.rrb = size_b - tmp.rb;
 		find_min_cost(&tmp);
-
 		if (tmp.min_cost < min_cost.min_cost)
 			copy_t_cost(&min_cost, &tmp);
 		node = node->next;
@@ -242,10 +240,10 @@ t_cost leastcost(t_stacks *stacks, t_cost *final_cost)
 	return (min_cost);
 }
 
-void algo_pushb2(t_stacks *stacks)
+void	algo_pushb2(t_stacks *stacks)
 {
-	t_cost cost;
-	int    last_value[3];
+	t_cost	cost;
+	int		last_value[3];
 
 	stacks->action(PB, stacks);
 	if (stacks->n > 4)
@@ -254,7 +252,6 @@ void algo_pushb2(t_stacks *stacks)
 	while (stacks->n > 3)
 	{
 		leastcost(stacks, &cost);
-
 		while (cost.ra--)
 			stacks->action(RA, stacks);
 		while (cost.rb--)
@@ -267,7 +264,6 @@ void algo_pushb2(t_stacks *stacks)
 			stacks->action(RRB, stacks);
 		while (cost.rrr--)
 			stacks->action(RRR, stacks);
-
 		stacks->action(PB, stacks);
 		stacks->n = size_stack(stacks, 'a');
 	}
