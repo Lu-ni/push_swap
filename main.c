@@ -1,4 +1,3 @@
-#include "libft/libft.h"
 #include "node_utils.h"
 #include "struct.h"
 #include <limits.h>
@@ -6,6 +5,22 @@
 
 int check_errors(char **argv, int count)
 {
+	int i;
+	int ii;
+
+	i = 1;
+	ii = 0;
+	while (i < count)
+	{	
+		ii= 0;
+		while(argv[i][ii])
+		{
+			if(!('0' <= argv[i][ii] && argv[i][ii] <= '9'))
+				return 1;
+			ii++;
+		}
+		i++;
+	}
 	return (0);
 }
 
@@ -15,11 +30,11 @@ int parser(int count, char **argv, t_stacks *stacks)
 	int     i;
 
 	i = 2;
-	node = lstnew(ft_atoi(argv[1]));
+	node = lstnew(atoi_ps(argv[1]));
 	stacks->a = node;
 	while (i < count)
 	{
-		node->next = lstnew(ft_atoi(argv[i]));
+		node->next = lstnew(atoi_ps(argv[i]));
 		node = node->next;
 		i++;
 	}
@@ -41,7 +56,6 @@ int main(int argc, char **argv)
 	add_index(&stacks);
 	if (check_sorted(&stacks))
 		return (0);
-	////// done with mandatory stuff
 	if (stacks.n < 4)
 		algo_low_n(&stacks);
 	else

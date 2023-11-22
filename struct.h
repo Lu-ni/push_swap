@@ -19,6 +19,7 @@ typedef struct s_node
 {
 	int            val;
 	int            index;
+	int  			errors;
 	struct s_node *next;
 } t_node;
 typedef struct s_cost

@@ -1,4 +1,3 @@
-#include "libft/libft.h"
 #include "node_utils.h"
 #include "struct.h"
 #include <limits.h>
