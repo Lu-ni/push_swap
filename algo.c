@@ -6,7 +6,7 @@
 /*   By: lnicolli <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 20:26:16 by lnicolli          #+#    #+#             */
-/*   Updated: 2023/11/18 22:24:05 by lnicolli         ###   ########.fr       */
+/*   Updated: 2023/11/22 17:32:42 by lnicolli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int	max_b(t_stacks *stacks)
 	}
 	return (max);
 }
+
 int	last_index_b(t_stacks *stacks)
 {
 	t_node	*node;
@@ -37,6 +38,7 @@ int	last_index_b(t_stacks *stacks)
 		node = node->next;
 	return (node->index);
 }
+
 int	min_b(t_stacks *stacks)
 {
 	int		min;
@@ -52,6 +54,7 @@ int	min_b(t_stacks *stacks)
 	}
 	return (min);
 }
+
 int	previous_index(t_stacks *stacks, int index)
 {
 	t_node	*node;
@@ -76,6 +79,7 @@ int	previous_index(t_stacks *stacks, int index)
 	}
 	return (-1);
 }
+
 int	size_stack(t_stacks *stacks, char c)
 {
 	t_node	*node;
@@ -93,6 +97,7 @@ int	size_stack(t_stacks *stacks, char c)
 	}
 	return (size);
 }
+
 int	count_pos_b(t_node *node_, t_stacks *stacks)
 {
 	int		max;
@@ -125,6 +130,7 @@ int	count_pos_b(t_node *node_, t_stacks *stacks)
 	}
 	return (count);
 }
+
 int	min(int a, int b)
 {
 	if (a < b)
@@ -132,6 +138,7 @@ int	min(int a, int b)
 	else
 		return (b);
 }
+
 void	copy_t_cost(t_cost *dest, t_cost *src)
 {
 	dest->min_cost = src->min_cost;
@@ -142,6 +149,7 @@ void	copy_t_cost(t_cost *dest, t_cost *src)
 	dest->rrb = src->rrb;
 	dest->rrr = src->rrr;
 }
+
 void	find_min_cost(t_cost *cost)
 {
 	t_cost	tmp;
@@ -269,7 +277,6 @@ void	algo_pushb2(t_stacks *stacks)
 	}
 	stacks->n = size_stack(stacks, 'a');
 	algo_low_n(stacks);
-	//
 	if (b_direction(max_b(stacks), stacks))
 	{
 		while (stacks->b->index != max_b(stacks))
@@ -280,7 +287,6 @@ void	algo_pushb2(t_stacks *stacks)
 		while (stacks->b->index != max_b(stacks))
 			stacks->action(RRB, stacks);
 	}
-	//
 	last_value[0] = stacks->a->index;
 	last_value[1] = stacks->a->next->index;
 	last_value[2] = stacks->a->next->next->index;

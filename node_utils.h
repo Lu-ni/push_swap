@@ -1,4 +1,18 @@
-#include "struct.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   node_utils.h                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lnicolli <marvin@42lausanne.ch>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/11/22 17:31:10 by lnicolli          #+#    #+#             */
+/*   Updated: 2023/11/22 17:31:19 by lnicolli         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#ifndef NODE_UTILS_H
+# define NODE_UTILS_H
+# include "struct.h"
 
 t_node	*lstnew(int content);
 t_node	*lstlast(t_node *lst);
@@ -16,3 +30,4 @@ int		atoi_ps(const char *str);
 int		strlen_ps(const char *str);
 int		check_errors(char **argv, int count);
 void	write_str(char *str, int fd);
+#endif

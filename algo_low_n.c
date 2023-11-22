@@ -6,12 +6,19 @@
 /*   By: lnicolli <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 16:34:12 by lnicolli          #+#    #+#             */
-/*   Updated: 2023/11/22 16:34:21 by lnicolli         ###   ########.fr       */
+/*   Updated: 2023/11/22 17:38:12 by lnicolli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "node_utils.h"
 #include "struct.h"
+
+void	set_var(t_node *n, int *a, int*b, int *c)
+{
+	*a = n->index;
+	*b = n->next->index;
+	*c = n->next->next->index;
+}
 
 void	sort_n_3(t_stacks *stacks)
 {
@@ -21,13 +28,9 @@ void	sort_n_3(t_stacks *stacks)
 	int		c;
 
 	n = stacks->a;
-	a = n->index;
-	b = n->next->index;
-	c = n->next->next->index;
+	set_var(n, &a, &b, &c);
 	if (a < b && a < c && b < c)
-	{
 		return ;
-	}
 	else if (a < b && a < c && b > c)
 	{
 		stacks->action(SA, stacks);

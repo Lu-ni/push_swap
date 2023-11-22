@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   error.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lnicolli <marvin@42lausanne.ch>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/11/22 17:31:36 by lnicolli          #+#    #+#             */
+/*   Updated: 2023/11/22 17:31:46 by lnicolli         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "node_utils.h"
 #include "struct.h"
 #include <limits.h>
@@ -17,6 +29,7 @@ int	valcmp(char *str, char *val)
 	}
 	return (0);
 }
+
 int	check_maxvalue(char *str, char *max, char *min)
 {
 	int	size;
@@ -54,6 +67,7 @@ int	check_input(char *str)
 	}
 	return (0);
 }
+
 int	check_errors(char **argv, int count)
 {
 	int	i;
