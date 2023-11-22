@@ -3,27 +3,6 @@
 #include <limits.h>
 #include <stdio.h>
 
-int check_errors(char **argv, int count)
-{
-	int i;
-	int ii;
-
-	i = 1;
-	ii = 0;
-	while (i < count)
-	{	
-		ii= 0;
-		while(argv[i][ii])
-		{
-			if(!('0' <= argv[i][ii] && argv[i][ii] <= '9'))
-				return 1;
-			ii++;
-		}
-		i++;
-	}
-	return (0);
-}
-
 int parser(int count, char **argv, t_stacks *stacks)
 {
 	t_node *node;
@@ -60,6 +39,5 @@ int main(int argc, char **argv)
 		algo_low_n(&stacks);
 	else
 		algo_pushb2(&stacks);
-
 	return (0);
 }
