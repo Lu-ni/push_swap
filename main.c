@@ -19,7 +19,24 @@ int parser(int count, char **argv, t_stacks *stacks)
 	}
 	return (0);
 }
-
+int check_double(t_stacks *stacks)
+{
+	t_node *node;
+	t_node *tmp;
+	node = stacks->a;
+	while(node->next)
+	{
+		tmp=node->next;
+		while (tmp)
+		{
+			if (tmp->val == node->val)
+				return 1;
+			tmp = tmp->next;
+		}
+		node = node->next;
+	}
+	return (0);
+}
 int main(int argc, char **argv)
 {
 	t_stacks stacks;
@@ -29,9 +46,11 @@ int main(int argc, char **argv)
 	stacks.b = (t_node *) 0;
 	stacks.n = argc - 1;
 
-	if (check_errors(argv, argc)) // todo
-		return (1); // the stack passed as argv contain incorrect value
+	if (check_errors(argv, argc))
+		return (1);
 	parser(argc, argv, &stacks);
+	if (check_double(&stacks))
+		return (1);
 	add_index(&stacks);
 	if (check_sorted(&stacks))
 		return (0);
