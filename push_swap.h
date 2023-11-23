@@ -6,12 +6,12 @@
 /*   By: lnicolli <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 17:31:10 by lnicolli          #+#    #+#             */
-/*   Updated: 2023/11/22 17:31:19 by lnicolli         ###   ########.fr       */
+/*   Updated: 2023/11/23 09:46:28 by lnicolli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef NODE_UTILS_H
-# define NODE_UTILS_H
+#ifndef PUSH_SWAP_H
+# define PUSH_SWAP_H
 # include "struct.h"
 
 t_node	*lstnew(int content);

@@ -6,11 +6,11 @@
 /*   By: lnicolli <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 16:31:46 by lnicolli          #+#    #+#             */
-/*   Updated: 2023/11/22 16:33:42 by lnicolli         ###   ########.fr       */
+/*   Updated: 2023/11/23 09:50:00 by lnicolli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "node_utils.h"
+#include "push_swap.h"
 #include "struct.h"
 
 void	action_r(t_stacks *stacks, char stack)
