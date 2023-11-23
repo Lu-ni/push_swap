@@ -6,7 +6,7 @@
 /*   By: lnicolli <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 17:04:36 by lnicolli          #+#    #+#             */
-/*   Updated: 2023/11/23 10:34:16 by lnicolli         ###   ########.fr       */
+/*   Updated: 2023/11/23 16:05:37 by lnicolli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 # define RRB 10
 # define RRR 11
 
-struct s_stacks;
+struct				s_stacks;
 typedef struct s_node
 {
 	int				val;
@@ -43,7 +43,6 @@ typedef struct s_cost
 	int				rrr;
 	int				min_cost;
 }					t_cost;
-
 typedef void		(*t_action)(int, struct s_stacks *);
 typedef struct s_stacks
 {

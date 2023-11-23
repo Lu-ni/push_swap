@@ -6,7 +6,7 @@
 /*   By: lnicolli <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 17:48:05 by lnicolli          #+#    #+#             */
-/*   Updated: 2023/11/22 17:04:21 by lnicolli         ###   ########.fr       */
+/*   Updated: 2023/11/23 15:41:31 by lnicolli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ int	atoi_ps(const char *str)
 	strcopy = (char *)str;
 	number = 0;
 	signe = 1;
-	while (*strcopy == ' ' | *strcopy == '\t' | *strcopy == '\n' | *strcopy == '\r' | *strcopy == '\v' | *strcopy == '\f')
+	while (*strcopy == ' ' | *strcopy == '\t' | *strcopy == '\n'
+		| *strcopy == '\r' | *strcopy == '\v' | *strcopy == '\f')
 		strcopy++;
 	if (*strcopy == '-' || *strcopy == '+')
 	{

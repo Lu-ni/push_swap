@@ -6,7 +6,7 @@
 /*   By: lnicolli <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 16:38:54 by lnicolli          #+#    #+#             */
-/*   Updated: 2023/11/23 15:34:47 by lnicolli         ###   ########.fr       */
+/*   Updated: 2023/11/23 15:42:42 by lnicolli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ void	free_stacks(t_stacks *stacks)
 		actual = next;
 	}
 }
+
 int	main(int argc, char **argv)
 {
 	t_stacks	stacks;

@@ -6,7 +6,7 @@
 /*   By: lnicolli <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 13:42:29 by lnicolli          #+#    #+#             */
-/*   Updated: 2023/11/23 13:59:39 by lnicolli         ###   ########.fr       */
+/*   Updated: 2023/11/23 15:42:03 by lnicolli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ int	check_double(t_stacks *stacks)
 	}
 	return (0);
 }
+
 int	init_str(char **argv, t_stacks *stacks)
 {
 	int	i;
@@ -95,6 +96,7 @@ int	init_str(char **argv, t_stacks *stacks)
 	}
 	return (0);
 }
+
 int	init(char **argv, int argc, t_stacks *stacks)
 {
 	if (check_errors(argv, argc, 0))
