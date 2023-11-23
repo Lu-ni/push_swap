@@ -1,26 +1,16 @@
-NAME = libftprintf.a
+NAME = push_swap
 CC = cc
 CFLAGS = -Wextra -Werror -Wall
-SRC = ft_printf.c hexadecimal_tools.c ft_u_itoa.c
+SRC = actions.c algo.c algo_low_n.c algo_utils.c algo_utils2.c error.c ft_atoi.c ft_calloc.c ft_split.c ft_strdup.c ft_strlen.c ft_substr.c init.c leastcost.c main.c node_basic.c stack_utils.c
 OBJ = $(SRC:.c=.o)
-LIBFT = libft/libft.a
 
-all: x
-x:
-	gcc -g $(CFLAGS) *.c -o push_swap
-$(NAME): $(OBJ) $(LIBFT)
-	# Extract object files from libft.a
-	ar -x $(LIBFT)
-	# Create libftprintf.a including those object files
-	ar -rcs $(NAME) $(OBJ) *.o
-	# Optionally, remove extracted object files to clean up
-	rm -f *.o "__.SYMDEF SORTED"
+all: $(NAME)
 
-$(OBJ): $(SRC)
-	$(CC) $(CFLAGS) $(SRC)
+$(NAME): $(OBJ)
+	$(CC) $(OBJ) -o $(NAME)
 
-$(LIBFT):
-	cd libft && make bonus && cd ../
+%.o: %.c
+	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
 	rm -f $(OBJ)
