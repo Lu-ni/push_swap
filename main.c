@@ -6,7 +6,7 @@
 /*   By: lnicolli <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 16:38:54 by lnicolli          #+#    #+#             */
-/*   Updated: 2023/11/23 12:49:35 by lnicolli         ###   ########.fr       */
+/*   Updated: 2023/11/23 13:02:34 by lnicolli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "struct.h"
 #include <limits.h>
 #include <stdlib.h>
+#include <stdio.h>
 
 int	parser(int count, char **argv, t_stacks *stacks)
 {
@@ -46,6 +47,7 @@ int	parser_str(char **argv, t_stacks *stacks)
 		node = node->next;
 		i++;
 	}
+	stacks->n = i;
 	return (0);
 }
 
@@ -102,23 +104,26 @@ int	main(int argc, char **argv)
 		return 0;
 	if (argc == 2)
 	{
-		argv = ft_split((const char *)argv, ' ');
+		argv = ft_split((const char *)argv[1], ' ');
 		if(!argv)
 			return 1;
+	}
+	//if (check_errors(argv, argc))
+	//{
+	//	write_str("Error", 2);
+	//	return (1);
+	//}
+	if(argc ==2)
 		parser_str(argv, &stacks);
-	}
-	if (check_errors(argv, argc))
-	{
-		write_str("Error", 2);
-		return (1);
-	}
-	parser(argc, argv, &stacks);
+	else
+		parser(argc, argv, &stacks);
 	if (check_double(&stacks))
 	{
 		write_str("Error", 2);
 		free_stacks(&stacks);
 		return (1);
 	}
+	/// don't change
 	add_index(&stacks);
 	if (check_sorted(&stacks))
 	{
