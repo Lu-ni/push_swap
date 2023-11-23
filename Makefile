@@ -6,8 +6,6 @@ OBJ = $(SRC:.c=.o)
 LIBFT = libft/libft.a
 
 all: x
-tester: x
-	cd push_swap_tester && bash myTestes.sh && cd ../
 x:
 	gcc $(CFLAGS) *.c -o push_swap
 $(NAME): $(OBJ) $(LIBFT)

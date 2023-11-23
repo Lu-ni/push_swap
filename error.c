@@ -6,7 +6,7 @@
 /*   By: lnicolli <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 17:31:36 by lnicolli          #+#    #+#             */
-/*   Updated: 2023/11/23 13:40:22 by lnicolli         ###   ########.fr       */
+/*   Updated: 2023/11/23 14:19:34 by lnicolli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	check_input(char *str)
 {
 	if (*str == '-')
 		str++;
-	if (*str == '0' && *(str + 1))
+	if (!*str || (*str == '0' && *(str + 1)))
 		return (1);
 	while (*str)
 	{
@@ -78,9 +78,8 @@ int	check_errors(char **argv, int count, int str)
 		{
 			if (check_input(argv[i]))
 				return (1);
-			if (check_maxvalue(argv[i], "2147483647", "-2147483648"))
+			if (check_maxvalue(argv[i++], "2147483647", "-2147483648"))
 				return (1);
-			i++;
 		}
 	}
 	else
@@ -90,9 +89,8 @@ int	check_errors(char **argv, int count, int str)
 		{
 			if (check_input(argv[i]))
 				return (1);
-			if (check_maxvalue(argv[i], "2147483647", "-2147483648"))
+			if (check_maxvalue(argv[i++], "2147483647", "-2147483648"))
 				return (1);
-			i++;
 		}
 	}
 	return (0);

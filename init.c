@@ -6,11 +6,12 @@
 /*   By: lnicolli <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 13:42:29 by lnicolli          #+#    #+#             */
-/*   Updated: 2023/11/23 13:48:10 by lnicolli         ###   ########.fr       */
+/*   Updated: 2023/11/23 13:59:39 by lnicolli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
+#include "stdlib.h"
 
 int	parser(int count, char **argv, t_stacks *stacks)
 {
@@ -66,17 +67,26 @@ int	check_double(t_stacks *stacks)
 	}
 	return (0);
 }
-int init_str(char **argv, t_stacks *stacks)
+int	init_str(char **argv, t_stacks *stacks)
 {
+	int	i;
+
+	i = 0;
 	argv = ft_split((const char *)argv[1], ' ');
-	if(!argv || !argv[0])
-		return 1;
-	if (check_errors(argv,0, 1))
+	if (!argv)
+		return (1);
+	if (check_errors(argv, 0, 1))
 	{
 		write_str("Error", 2);
+		while (argv[i])
+			free(argv[i++]);
+		free(argv);
 		return (1);
 	}
 	parser_str(argv, stacks);
+	while (argv[i])
+		free(argv[i++]);
+	free(argv);
 	if (check_double(stacks))
 	{
 		write_str("Error", 2);
@@ -85,7 +95,7 @@ int init_str(char **argv, t_stacks *stacks)
 	}
 	return (0);
 }
-int init(char **argv, int argc, t_stacks *stacks)
+int	init(char **argv, int argc, t_stacks *stacks)
 {
 	if (check_errors(argv, argc, 0))
 	{
@@ -99,5 +109,5 @@ int init(char **argv, int argc, t_stacks *stacks)
 		free_stacks(stacks);
 		return (1);
 	}
-	return 0;
+	return (0);
 }
