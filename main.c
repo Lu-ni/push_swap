@@ -6,13 +6,14 @@
 /*   By: lnicolli <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 16:38:54 by lnicolli          #+#    #+#             */
-/*   Updated: 2023/11/23 09:50:00 by lnicolli         ###   ########.fr       */
+/*   Updated: 2023/11/23 12:49:35 by lnicolli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 #include "struct.h"
 #include <limits.h>
+#include <stdlib.h>
 
 int	parser(int count, char **argv, t_stacks *stacks)
 {
@@ -23,6 +24,23 @@ int	parser(int count, char **argv, t_stacks *stacks)
 	node = lstnew(atoi_ps(argv[1]));
 	stacks->a = node;
 	while (i < count)
+	{
+		node->next = lstnew(atoi_ps(argv[i]));
+		node = node->next;
+		i++;
+	}
+	return (0);
+}
+
+int	parser_str(char **argv, t_stacks *stacks)
+{
+	t_node	*node;
+	int		i;
+
+	i = 1;
+	node = lstnew(atoi_ps(argv[0]));
+	stacks->a = node;
+	while (argv[i])
 	{
 		node->next = lstnew(atoi_ps(argv[i]));
 		node = node->next;
@@ -51,6 +69,27 @@ int	check_double(t_stacks *stacks)
 	return (0);
 }
 
+void free_stacks(t_stacks *stacks)
+{
+	t_node *actual;
+	t_node *next;
+
+	actual = stacks->a;
+	while(actual)
+	{
+		next = actual->next;
+		free(actual);
+		actual = next;
+	}
+	actual = stacks->b;
+	while(actual)
+	{
+		next = actual->next;
+		free(actual);
+		actual = next;
+	}
+}
+
 int	main(int argc, char **argv)
 {
 	t_stacks	stacks;
@@ -59,6 +98,15 @@ int	main(int argc, char **argv)
 	stacks.a = (t_node *)0;
 	stacks.b = (t_node *)0;
 	stacks.n = argc - 1;
+	if (argc < 2)
+		return 0;
+	if (argc == 2)
+	{
+		argv = ft_split((const char *)argv, ' ');
+		if(!argv)
+			return 1;
+		parser_str(argv, &stacks);
+	}
 	if (check_errors(argv, argc))
 	{
 		write_str("Error", 2);
@@ -68,14 +116,19 @@ int	main(int argc, char **argv)
 	if (check_double(&stacks))
 	{
 		write_str("Error", 2);
+		free_stacks(&stacks);
 		return (1);
 	}
 	add_index(&stacks);
 	if (check_sorted(&stacks))
+	{
+		free_stacks(&stacks);
 		return (0);
+	}
 	if (stacks.n < 4)
 		algo_low_n(&stacks);
 	else
 		algo_pushb2(&stacks);
+	free_stacks(&stacks);
 	return (0);
 }
