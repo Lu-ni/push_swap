@@ -6,7 +6,7 @@
 /*   By: lnicolli <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 20:26:16 by lnicolli          #+#    #+#             */
-/*   Updated: 2023/11/23 11:07:32 by lnicolli         ###   ########.fr       */
+/*   Updated: 2023/11/23 13:46:35 by lnicolli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ void	algo_pushb2(t_stacks *stacks)
 {
 	t_cost	cost;
 
+	if (check_sorted(stacks))
+		return ;
 	stacks->action(PB, stacks);
 	if (stacks->n > 4)
 		stacks->action(PB, stacks);
