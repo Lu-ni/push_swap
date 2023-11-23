@@ -6,7 +6,7 @@
 /*   By: lnicolli <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 17:31:36 by lnicolli          #+#    #+#             */
-/*   Updated: 2023/11/23 12:13:40 by lnicolli         ###   ########.fr       */
+/*   Updated: 2023/11/23 13:40:22 by lnicolli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,18 +67,33 @@ int	check_input(char *str)
 	return (0);
 }
 
-int	check_errors(char **argv, int count)
+int	check_errors(char **argv, int count, int str)
 {
 	int	i;
 
-	i = 1;
-	while (i < count)
+	if (str)
 	{
-		if (check_input(argv[i]))
-			return (1);
-		if (check_maxvalue(argv[i], "2147483647", "-2147483648"))
-			return (1);
-		i++;
+		i = 0;
+		while (argv[i])
+		{
+			if (check_input(argv[i]))
+				return (1);
+			if (check_maxvalue(argv[i], "2147483647", "-2147483648"))
+				return (1);
+			i++;
+		}
+	}
+	else
+	{
+		i = 1;
+		while (i < count)
+		{
+			if (check_input(argv[i]))
+				return (1);
+			if (check_maxvalue(argv[i], "2147483647", "-2147483648"))
+				return (1);
+			i++;
+		}
 	}
 	return (0);
 }

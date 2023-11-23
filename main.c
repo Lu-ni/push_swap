@@ -6,7 +6,7 @@
 /*   By: lnicolli <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 16:38:54 by lnicolli          #+#    #+#             */
-/*   Updated: 2023/11/23 13:02:34 by lnicolli         ###   ########.fr       */
+/*   Updated: 2023/11/23 13:41:01 by lnicolli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,41 @@ void free_stacks(t_stacks *stacks)
 		actual = next;
 	}
 }
-
+int init_str(char **argv, t_stacks *stacks)
+{
+	argv = ft_split((const char *)argv[1], ' ');
+	if(!argv)
+		return 1;
+	if (check_errors(argv,0, 1))
+	{
+		write_str("Error", 2);
+		return (1);
+	}
+	parser_str(argv, stacks);
+	if (check_double(stacks))
+	{
+		write_str("Error", 2);
+		free_stacks(stacks);
+		return (1);
+	}
+	return (0);
+}
+int init(char **argv, int argc, t_stacks *stacks)
+{
+	if (check_errors(argv, argc, 0))
+	{
+		write_str("Error", 2);
+		return (1);
+	}
+	parser(argc, argv, stacks);
+	if (check_double(stacks))
+	{
+		write_str("Error", 2);
+		free_stacks(stacks);
+		return (1);
+	}
+	return 0;
+}
 int	main(int argc, char **argv)
 {
 	t_stacks	stacks;
@@ -102,27 +136,10 @@ int	main(int argc, char **argv)
 	stacks.n = argc - 1;
 	if (argc < 2)
 		return 0;
-	if (argc == 2)
-	{
-		argv = ft_split((const char *)argv[1], ' ');
-		if(!argv)
-			return 1;
-	}
-	//if (check_errors(argv, argc))
-	//{
-	//	write_str("Error", 2);
-	//	return (1);
-	//}
-	if(argc ==2)
-		parser_str(argv, &stacks);
-	else
-		parser(argc, argv, &stacks);
-	if (check_double(&stacks))
-	{
-		write_str("Error", 2);
-		free_stacks(&stacks);
-		return (1);
-	}
+	else if (argc == 2 && init_str(argv, &stacks))
+		return 0;
+	else if (argc > 2 && init(argv, argc, &stacks))
+		return 0;
 	/// don't change
 	add_index(&stacks);
 	if (check_sorted(&stacks))

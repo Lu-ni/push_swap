@@ -6,7 +6,7 @@
 /*   By: lnicolli <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 17:31:10 by lnicolli          #+#    #+#             */
-/*   Updated: 2023/11/23 12:36:46 by lnicolli         ###   ########.fr       */
+/*   Updated: 2023/11/23 13:25:19 by lnicolli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	algo_low_n(t_stacks *stacks);
 void	sort_n_3(t_stacks *stacks);
 int		atoi_ps(const char *str);
 int		strlen_ps(const char *str);
-int		check_errors(char **argv, int count);
+int		check_errors(char **argv, int count, int str);
 void	write_str(char *str, int fd);
 size_t	ft_strlen(const char *str);
 char	*ft_strdup(const char *s1);
