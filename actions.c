@@ -6,12 +6,13 @@
 /*   By: lnicolli <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 16:31:46 by lnicolli          #+#    #+#             */
-/*   Updated: 2023/11/23 11:00:41 by lnicolli         ###   ########.fr       */
+/*   Updated: 2023/11/23 15:26:27 by lnicolli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 #include "struct.h"
+#include <stdio.h>
 
 void	action_r(t_stacks *stacks, char stack)
 {
@@ -52,23 +53,22 @@ void	action_rr(t_stacks *stacks, char stack)
 		node1 = lstlast(stacks->a);
 		node1->next = stacks->a;
 		stacks->a = node1;
-		if (stack == 'a')
-			write_str("rra", 1);
+		node2 = node1;
+		while (node2->next != node1)
+			node2 = node2->next;
+		node2->next = (t_node *)0;
 	}
 	if ((stack == 'b' || stack == 'r') && stacks->b && stacks->b->next)
 	{
 		node1 = lstlast(stacks->b);
 		node1->next = stacks->b;
 		stacks->b = node1;
-		if (stack == 'b')
-			write_str("rrb", 1);
+		node2 = node1;
+		while (node2->next != node1)
+			node2 = node2->next;
+		node2->next = (t_node *)0;
 	}
-	node2 = node1;
-	while (node2->next != node1)
-		node2 = node2->next;
-	node2->next = (t_node *)0;
-	if (stack == 'r')
-		write_str("rrr", 1);
+	write_rr("rr", stack, 1);
 }
 
 void	action_p(t_stacks *stacks, char stack)

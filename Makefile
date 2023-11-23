@@ -7,7 +7,7 @@ LIBFT = libft/libft.a
 
 all: x
 x:
-	gcc $(CFLAGS) *.c -o push_swap
+	gcc -g $(CFLAGS) *.c -o push_swap
 $(NAME): $(OBJ) $(LIBFT)
 	# Extract object files from libft.a
 	ar -x $(LIBFT)

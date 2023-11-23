@@ -6,7 +6,7 @@
 /*   By: lnicolli <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 16:31:24 by lnicolli          #+#    #+#             */
-/*   Updated: 2023/11/22 16:31:26 by lnicolli         ###   ########.fr       */
+/*   Updated: 2023/11/23 15:25:34 by lnicolli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,5 +43,16 @@ void	write_str(char *str, int fd)
 		write(fd, str, 1);
 		str++;
 	}
+	write(fd, "\n", 1);
+}
+
+void	write_rr(char *str, char c, int fd)
+{
+	while (*str)
+	{
+		write(fd, str, 1);
+		str++;
+	}
+	write(fd, &c,1);
 	write(fd, "\n", 1);
 }

@@ -6,7 +6,7 @@
 /*   By: lnicolli <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 17:31:10 by lnicolli          #+#    #+#             */
-/*   Updated: 2023/11/23 14:09:06 by lnicolli         ###   ########.fr       */
+/*   Updated: 2023/11/23 15:26:22 by lnicolli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,4 +39,5 @@ char	*ft_substr(char const *s, unsigned int start, size_t len);
 void	free_stacks(t_stacks *stacks);
 int		init_str(char **argv, t_stacks *stacks);
 int		init(char **argv, int argc, t_stacks *stacks);
+void	write_rr(char *str, char c, int fd);
 #endif
