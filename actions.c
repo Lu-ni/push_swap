@@ -6,7 +6,7 @@
 /*   By: lnicolli <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 16:31:46 by lnicolli          #+#    #+#             */
-/*   Updated: 2023/11/23 09:50:00 by lnicolli         ###   ########.fr       */
+/*   Updated: 2023/11/23 11:00:41 by lnicolli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,6 @@ void	action_rr(t_stacks *stacks, char stack)
 		node1 = lstlast(stacks->a);
 		node1->next = stacks->a;
 		stacks->a = node1;
-		node2 = node1;
-		while (node2->next != node1)
-			node2 = node2->next;
-		node2->next = (t_node *)0;
 		if (stack == 'a')
 			write_str("rra", 1);
 	}
@@ -64,13 +60,13 @@ void	action_rr(t_stacks *stacks, char stack)
 		node1 = lstlast(stacks->b);
 		node1->next = stacks->b;
 		stacks->b = node1;
-		node2 = node1;
-		while (node2->next != node1)
-			node2 = node2->next;
-		node2->next = (t_node *)0;
 		if (stack == 'b')
 			write_str("rrb", 1);
 	}
+	node2 = node1;
+	while (node2->next != node1)
+		node2 = node2->next;
+	node2->next = (t_node *)0;
 	if (stack == 'r')
 		write_str("rrr", 1);
 }

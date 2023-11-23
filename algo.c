@@ -6,7 +6,7 @@
 /*   By: lnicolli <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 20:26:16 by lnicolli          #+#    #+#             */
-/*   Updated: 2023/11/23 10:05:55 by lnicolli         ###   ########.fr       */
+/*   Updated: 2023/11/23 11:07:32 by lnicolli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,45 +14,29 @@
 #include "push_swap.h"
 #include "struct.h"
 
-void	algo_pushb2(t_stacks *stacks)
+void	do_actions(t_stacks *stacks, t_cost *cost)
 {
-	t_cost	cost;
-	int		last_value[3];
-
+	leastcost(stacks, cost);
+	while (cost->ra--)
+		stacks->action(RA, stacks);
+	while (cost->rb--)
+		stacks->action(RB, stacks);
+	while (cost->rr--)
+		stacks->action(RR, stacks);
+	while (cost->rra--)
+		stacks->action(RRA, stacks);
+	while (cost->rrb--)
+		stacks->action(RRB, stacks);
+	while (cost->rrr--)
+		stacks->action(RRR, stacks);
 	stacks->action(PB, stacks);
-	if (stacks->n > 4)
-		stacks->action(PB, stacks);
 	stacks->n = size_stack(stacks, 'a');
-	while (stacks->n > 3)
-	{
-		leastcost(stacks, &cost);
-		while (cost.ra--)
-			stacks->action(RA, stacks);
-		while (cost.rb--)
-			stacks->action(RB, stacks);
-		while (cost.rr--)
-			stacks->action(RR, stacks);
-		while (cost.rra--)
-			stacks->action(RRA, stacks);
-		while (cost.rrb--)
-			stacks->action(RRB, stacks);
-		while (cost.rrr--)
-			stacks->action(RRR, stacks);
-		stacks->action(PB, stacks);
-		stacks->n = size_stack(stacks, 'a');
-	}
-	stacks->n = size_stack(stacks, 'a');
-	algo_low_n(stacks);
-	if (b_direction(max_b(stacks), stacks))
-	{
-		while (stacks->b->index != max_b(stacks))
-			stacks->action(RB, stacks);
-	}
-	else
-	{
-		while (stacks->b->index != max_b(stacks))
-			stacks->action(RRB, stacks);
-	}
+}
+
+void	push_back2a(t_stacks *stacks)
+{
+	int	last_value[3];
+
 	last_value[0] = stacks->a->index;
 	last_value[1] = stacks->a->next->index;
 	last_value[2] = stacks->a->next->next->index;
@@ -69,4 +53,29 @@ void	algo_pushb2(t_stacks *stacks)
 	{
 		stacks->action(PA, stacks);
 	}
+}
+
+void	algo_pushb2(t_stacks *stacks)
+{
+	t_cost	cost;
+
+	stacks->action(PB, stacks);
+	if (stacks->n > 4)
+		stacks->action(PB, stacks);
+	stacks->n = size_stack(stacks, 'a');
+	while (stacks->n > 3)
+		do_actions(stacks, &cost);
+	stacks->n = size_stack(stacks, 'a');
+	algo_low_n(stacks);
+	if (b_direction(max_b(stacks), stacks))
+	{
+		while (stacks->b->index != max_b(stacks))
+			stacks->action(RB, stacks);
+	}
+	else
+	{
+		while (stacks->b->index != max_b(stacks))
+			stacks->action(RRB, stacks);
+	}
+	push_back2a(stacks);
 }
